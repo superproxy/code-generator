@@ -43,7 +43,6 @@ public final class FreeMarkerTplEngine implements TemplateEngine {
 //            for (Map model : modelList) {
             Configuration cfg = getConfiguration(tplRoot);
             Template template = cfg.getTemplate(tplPath); //  相对路径
-//                (Model) model.get("model");
             File file = new File(outPath);
             file.delete();
             OutputStream os = new FileOutputStream(file);

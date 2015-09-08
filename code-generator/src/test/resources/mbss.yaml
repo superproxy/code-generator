@@ -35,5 +35,38 @@ modules:
         packageName: com.sunning.mbss.impl
     tableName: mbss_account
     tablePrefix: mbss
+  - !com.github.superproxy.code.generator.app.ModuleConfig
+    moduleName: video
+    modulePartConfigList: 
+      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        classPostfix: Mapper
+        generator: com.github.superproxy.code.generator.plugins.model.ModelTplGenerator
+        packageName: com.sunning.mbss.model
+      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        classPostfix: ""
+        generator: com.github.superproxy.code.generator.plugins.sqlmap.SqlMapTplGenerator
+        packageName: ""
+      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        classPostfix: Dao
+        generator: com.github.superproxy.code.generator.plugins.dao.DaoTplGenerator
+        packageName: com.sunning.mbss.dao
+      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        classPostfix: DaoImpl
+        generator: com.github.superproxy.code.generator.plugins.dao.DaoImplTplGenerator
+        packageName: com.sunning.mbss.dao.impl
+      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        classPostfix: Mapper
+        generator: com.github.superproxy.code.generator.plugins.dao.DaoMapperTplGenerator
+        packageName: com.sunning.mbss.dao
+      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        classPostfix: Service
+        generator: com.github.superproxy.code.generator.plugins.service.ServiceTplGenerator
+        packageName: com.sunning.mbss.inf
+      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        classPostfix: ServiceImpl
+        generator: com.github.superproxy.code.generator.plugins.service.ServiceImplTplGenerator
+        packageName: com.sunning.mbss.impl
+    tableName: mbss_video
+    tablePrefix: mbss
 outPath: "d:/env"
 tplRoot: "E:\\projects\\code-generator\\code-generator\\src\\main\\resources\\templates\\snf"

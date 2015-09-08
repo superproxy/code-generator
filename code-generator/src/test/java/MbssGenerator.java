@@ -17,6 +17,12 @@ public class MbssGenerator {
         projectConfig.setDate("2014-12-30");
         projectConfig.setOutPath("d:/env");
         projectConfig.setTplRoot(new File("src\\main\\resources\\templates\\snf").getAbsolutePath());
+        projectConfig.addModule(getModuleConfig());
+        projectConfig.addModule(getModuleConfig2());
+        return projectConfig;
+    }
+
+    private ModuleConfig getModuleConfig() {
         ModuleConfig moduleConfig = new ModuleConfig();
         moduleConfig.setTableName("mbss_account");
         moduleConfig.setModuleName("account");
@@ -29,8 +35,23 @@ public class MbssGenerator {
         moduleConfig.addLayerConfig(new ModulePartConfig(DaoMapperTplGenerator.class.getName(), "com.sunning.mbss.dao", "Mapper"));
         moduleConfig.addLayerConfig(new ModulePartConfig(ServiceTplGenerator.class.getName(), "com.sunning.mbss.inf", "Service"));
         moduleConfig.addLayerConfig(new ModulePartConfig(ServiceImplTplGenerator.class.getName(), "com.sunning.mbss.impl", "ServiceImpl"));
-        projectConfig.addModule(moduleConfig);
-        return projectConfig;
+        return moduleConfig;
+    }
+
+    private ModuleConfig getModuleConfig2() {
+        ModuleConfig moduleConfig = new ModuleConfig();
+        moduleConfig.setTableName("mbss_video");
+        moduleConfig.setModuleName("video");
+        moduleConfig.setTablePrefix("mbss");
+
+        moduleConfig.addLayerConfig(new ModulePartConfig(ModelTplGenerator.class.getName(), "com.sunning.mbss.model", "Mapper"));
+        moduleConfig.addLayerConfig(new ModulePartConfig(SqlMapTplGenerator.class.getName(), "", ""));
+        moduleConfig.addLayerConfig(new ModulePartConfig(DaoTplGenerator.class.getName(), "com.sunning.mbss.dao", "Dao"));
+        moduleConfig.addLayerConfig(new ModulePartConfig(DaoImplTplGenerator.class.getName(), "com.sunning.mbss.dao.impl", "DaoImpl"));
+        moduleConfig.addLayerConfig(new ModulePartConfig(DaoMapperTplGenerator.class.getName(), "com.sunning.mbss.dao", "Mapper"));
+        moduleConfig.addLayerConfig(new ModulePartConfig(ServiceTplGenerator.class.getName(), "com.sunning.mbss.inf", "Service"));
+        moduleConfig.addLayerConfig(new ModulePartConfig(ServiceImplTplGenerator.class.getName(), "com.sunning.mbss.impl", "ServiceImpl"));
+        return moduleConfig;
     }
 
     @Test
