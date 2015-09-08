@@ -17,26 +17,26 @@ public class Model extends TableInfo implements JavaBean {
     private List<Field> pkFieldList;
     private JavaBeanConvertStrategy javaBeanConvertStrategy;
 
-    private ModuleConfig moduleConfig;
+    private MConfig mConfig;
 
-    public ModuleConfig getModuleConfig() {
-        return moduleConfig;
+    public MConfig getmConfig() {
+        return mConfig;
     }
 
-    public void setModuleConfig(ModuleConfig moduleConfig) {
-        this.moduleConfig = moduleConfig;
+    public void setmConfig(MConfig mConfig) {
+        this.mConfig = mConfig;
     }
 
 //    private String className;
 //    private String shortClassName;
 
     public String getShortClassName() {
-        return javaBeanConvertStrategy.convert(this, moduleConfig).getShortClassName();
+        return javaBeanConvertStrategy.convert(this, mConfig).getShortClassName();
     }
 
     @Override
     public String getPackage() {
-        return javaBeanConvertStrategy.convert(this, moduleConfig).getPackage();
+        return javaBeanConvertStrategy.convert(this, mConfig).getPackage();
     }
 
     private Map extra = new HashMap();
@@ -54,9 +54,9 @@ public class Model extends TableInfo implements JavaBean {
         this.extra = extra;
     }
 
-    public Model(JavaBeanConvertStrategy javaBeanConvertStrategy, ModuleConfig moduleConfig) {
+    public Model(JavaBeanConvertStrategy javaBeanConvertStrategy, MConfig mConfig) {
         this.javaBeanConvertStrategy = javaBeanConvertStrategy;
-        this.moduleConfig = moduleConfig;
+        this.mConfig = mConfig;
     }
 
 
@@ -93,12 +93,12 @@ public class Model extends TableInfo implements JavaBean {
      */
     @Override
     public String getClassName() {
-        return javaBeanConvertStrategy.convert(this, moduleConfig).getClassName();
+        return javaBeanConvertStrategy.convert(this, mConfig).getClassName();
     }
 
     @Override
     public String getSerialVersionUID() {
-        return javaBeanConvertStrategy.convert(this, moduleConfig).getSerialVersionUID();
+        return javaBeanConvertStrategy.convert(this, mConfig).getSerialVersionUID();
 
     }
 

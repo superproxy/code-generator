@@ -1,6 +1,6 @@
 package com.github.superproxy.code.generator.core.model;
 
-public class ModuleConfig {
+public class MConfig {
     String author;
     String packageName;
     String date;

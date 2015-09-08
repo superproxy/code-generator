@@ -7,7 +7,7 @@ import com.github.superproxy.code.generator.core.handler.ModelHandlerManager;
 import com.github.superproxy.code.generator.core.model.Field;
 import com.github.superproxy.code.generator.core.model.GeneratorContext;
 import com.github.superproxy.code.generator.core.model.Model;
-import com.github.superproxy.code.generator.core.model.ModuleConfig;
+import com.github.superproxy.code.generator.core.model.MConfig;
 import com.github.superproxy.code.generator.core.model.db.ColumnInfo;
 import com.github.superproxy.code.generator.core.model.db.DbSchema;
 import com.github.superproxy.code.generator.core.model.db.TableInfo;
@@ -37,7 +37,7 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
     protected DbSchema dbSchema;
     protected JavaFieldConvertStrategy javaFieldConvertStrategy;
     protected JavaBeanConvertStrategy javaBeanConvertStrategy;
-    protected ModuleConfig moduleConfig;
+    protected MConfig mConfig;
 
     private ModelHandlerManager modelHandlerManager = new ModelHandlerManager();
 
@@ -47,7 +47,7 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
 
     public DbModelTplGenerator(GeneratorContext generatorContext) {
         this.templateEngine = generatorContext.getTemplateEngine();
-        this.moduleConfig = generatorContext.getModuleConfig();
+        this.mConfig = generatorContext.getmConfig();
         this.dbSchema = generatorContext.getDbSchema();
         this.javaBeanConvertStrategy = generatorContext.getJavaBeanConvertStrategy();
         this.javaFieldConvertStrategy = generatorContext.getJavaFieldConvertStrategy();
@@ -87,13 +87,13 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
     }
 
     @Override
-    public ModuleConfig getModuleConfig() {
-        return moduleConfig;
+    public MConfig getmConfig() {
+        return mConfig;
     }
 
     @Override
-    public void setModuleConfig(ModuleConfig moduleConfig) {
-        this.moduleConfig = moduleConfig;
+    public void setmConfig(MConfig mConfig) {
+        this.mConfig = mConfig;
     }
 
     public void registerHandler(ModelExtendHandler handler) {
@@ -110,7 +110,7 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
         List<Map> mapList = new ArrayList<Map>();
         for (TableInfo tableInfo : tableInfoList) {
 
-            Model model = convert(tableInfo, moduleConfig);
+            Model model = convert(tableInfo, mConfig);
             setModel(model);
             Map root = process(model);
             mapList.add(root);
@@ -126,7 +126,7 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
         // Create the root hash
         Map root = new HashMap();
         // 对象信息
-        Util.object2Map(root, moduleConfig);
+        Util.object2Map(root, mConfig);
         modelHandlerManager.handler(model, root);
         LogUtil.debugInfo(root);
         root.put("model", model);
@@ -149,8 +149,8 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
      * @param tableInfo
      * @return
      */
-    private Model convert(TableInfo tableInfo, ModuleConfig moduleConfig) {
-        Model model = new Model(javaBeanConvertStrategy, moduleConfig);
+    private Model convert(TableInfo tableInfo, MConfig mConfig) {
+        Model model = new Model(javaBeanConvertStrategy, mConfig);
         try {
 
             // 基础表信息
@@ -199,7 +199,7 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
         Map map = getMap();
         tplInfo.setModel(map);
 
-        tplInfo.setTplRoot(moduleConfig.getTplsPath());
+        tplInfo.setTplRoot(mConfig.getTplsPath());
 
         tplInfo.setOutPath(getOutPath());
         tplInfo.setTplPath(getTemplatePath());

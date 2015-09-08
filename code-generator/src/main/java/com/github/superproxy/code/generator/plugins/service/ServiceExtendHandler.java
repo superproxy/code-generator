@@ -3,15 +3,15 @@ package com.github.superproxy.code.generator.plugins.service;
 
 import com.github.superproxy.code.generator.core.model.Model;
 import com.github.superproxy.code.generator.core.handler.ModelExtendHandler;
-import com.github.superproxy.code.generator.core.model.ModuleConfig;
+import com.github.superproxy.code.generator.core.model.MConfig;
 
 import java.util.Map;
 
 public class ServiceExtendHandler implements ModelExtendHandler {
-    private ModuleConfig moduleConfig;
+    private MConfig mConfig;
 
-    public ServiceExtendHandler(ModuleConfig moduleConfig) {
-        this.moduleConfig = moduleConfig;
+    public ServiceExtendHandler(MConfig mConfig) {
+        this.mConfig = mConfig;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class ServiceExtendHandler implements ModelExtendHandler {
     }
 
     private String getSqlMapName(Model model) {
-        return model.getTableName().replace(moduleConfig.getTablePrefix() + "_", "");
+        return model.getTableName().replace(mConfig.getTablePrefix() + "_", "");
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.github.superproxy.code.generator.plugins.sqlmap;
 import com.github.superproxy.code.generator.core.model.Model;
 import com.github.superproxy.code.generator.core.model.db.ColumnInfo;
 import com.github.superproxy.code.generator.core.model.Field;
-import com.github.superproxy.code.generator.core.model.ModuleConfig;
+import com.github.superproxy.code.generator.core.model.MConfig;
 
 import java.util.Map;
 
@@ -13,10 +13,10 @@ public class SqlMapMethodGeneratorImpl implements SqlMapMethodGenerator {
     public static final String INSERT_CHOOSE_2 = "<#if %1$s?exists && %1$s != \"\"> %2$s </#if>";
     public static final String INSERT_CHOOSE_3 = "<#if %1$s?exists && %1$s != \"\"> :%1$s, </#if>";
     public static final String INSERT_CHOOSE_4 = "<#if %1$s?exists && %1$s != \"\"> :%1$s </#if>";
-    ModuleConfig moduleConfig;
+    MConfig mConfig;
 
-    public SqlMapMethodGeneratorImpl(ModuleConfig moduleConfig) {
-        this.moduleConfig = moduleConfig;
+    public SqlMapMethodGeneratorImpl(MConfig mConfig) {
+        this.mConfig = mConfig;
     }
 
     @Override
@@ -287,7 +287,7 @@ public class SqlMapMethodGeneratorImpl implements SqlMapMethodGenerator {
     }
 
     private String getSqlMapName(Model model) {
-        return model.getTableName().replace(moduleConfig.getTablePrefix() + "_", "");
+        return model.getTableName().replace(mConfig.getTablePrefix() + "_", "");
     }
 
     public String handlerId() {

@@ -11,7 +11,7 @@ public class DaoMapperTplGenerator extends DbModelTplGenerator {
 
     public DaoMapperTplGenerator(GeneratorContext generatorContext) {
         super(generatorContext);
-        ModelExtendHandler modelExtendHandler = new ServiceExtendHandler(moduleConfig);
+        ModelExtendHandler modelExtendHandler = new ServiceExtendHandler(mConfig);
         registerHandler(modelExtendHandler);
     }
 
@@ -22,12 +22,12 @@ public class DaoMapperTplGenerator extends DbModelTplGenerator {
 
     @Override
     protected String getOutPath() {
-        String pkgDir = moduleConfig.getOutPath();
+        String pkgDir = mConfig.getOutPath();
 
-        pkgDir += File.separator + moduleConfig.getPackageName().replace(".", File.separator);
-        String module = moduleConfig.getModuleName();
+        pkgDir += File.separator + mConfig.getPackageName().replace(".", File.separator);
+        String module = mConfig.getModuleName();
         if (module != null) {
-            pkgDir += File.separator + moduleConfig.getModuleName();
+            pkgDir += File.separator + mConfig.getModuleName();
         }
         new File(pkgDir).mkdirs();
         String filepath = pkgDir + File.separator + model.getClassName() + ".java";

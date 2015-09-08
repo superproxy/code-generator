@@ -13,27 +13,27 @@ public class ProjectConfig implements Serializable {
     /**
      * 模版地址
      */
-    private String tplsPath;
+    private String tplRoot;
     /**
      * 输出路径
      */
     private String outPath;
-    private List<MConfig> modules = new ArrayList<MConfig>();
+    private List<ModuleConfig> modules = new ArrayList<ModuleConfig>();
 
-    public List<MConfig> getModules() {
+    public List<ModuleConfig> getModules() {
         return Collections.unmodifiableList(modules);
     }
 
-    public void setModules(List<MConfig> modules) {
+    public void setModules(List<ModuleConfig> modules) {
         this.modules = modules;
     }
 
-    public String getTplsPath() {
-        return tplsPath;
+    public String getTplRoot() {
+        return tplRoot;
     }
 
-    public void setTplsPath(String tplsPath) {
-        this.tplsPath = tplsPath;
+    public void setTplRoot(String tplRoot) {
+        this.tplRoot = tplRoot;
     }
 
     public String getOutPath() {
@@ -62,8 +62,8 @@ public class ProjectConfig implements Serializable {
     }
 
 
-    public void addModule(MConfig mConfig) {
-        modules.add(mConfig);
+    public void addModule(ModuleConfig moduleConfig) {
+        modules.add(moduleConfig);
     }
 
     @Override

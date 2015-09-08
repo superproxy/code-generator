@@ -6,22 +6,23 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MConfig implements Serializable {
+public class ModuleConfig implements Serializable {
     private String tablePrefix;
     private String moduleName;
     private String tableName;
-    private List<ModulePartConfig> javaGeneratorList = new ArrayList<ModulePartConfig>();
 
-    public List<ModulePartConfig> getLayerConfig() {
-        return javaGeneratorList;
+    public List<ModulePartConfig> getModulePartConfigList() {
+        return modulePartConfigList;
     }
 
-    public void setLayerConfig(List<ModulePartConfig> javaGeneratorList) {
-        this.javaGeneratorList = javaGeneratorList;
+    public void setModulePartConfigList(List<ModulePartConfig> modulePartConfigList) {
+        this.modulePartConfigList = modulePartConfigList;
     }
 
-    public void addLayerConfig(ModulePartConfig javaGenerator) {
-        javaGeneratorList.add(javaGenerator);
+    private List<ModulePartConfig> modulePartConfigList = new ArrayList<ModulePartConfig>();
+
+    public void addLayerConfig(ModulePartConfig modulePartConfig) {
+        modulePartConfigList.add(modulePartConfig);
     }
 
     public String getTablePrefix() {

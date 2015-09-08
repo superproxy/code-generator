@@ -6,7 +6,7 @@ import com.github.superproxy.code.generator.core.model.db2java.JavaBeanConvertSt
 import com.github.superproxy.code.generator.core.model.db2java.JavaFieldConvertStrategy;
 
 public class GeneratorContext {
-    private ModuleConfig moduleConfig;
+    private MConfig mConfig;
     private DbSchema dbSchema;
 
     private JavaBeanConvertStrategy javaBeanConvertStrategy;
@@ -25,11 +25,11 @@ public class GeneratorContext {
     public GeneratorContext() {
     }
 
-    public GeneratorContext(DbSchema dbSchema, JavaBeanConvertStrategy javaBeanConvertStrategy, JavaFieldConvertStrategy javaFieldConvertStrategy, ModuleConfig moduleConfig, TemplateEngine templateEngine) {
+    public GeneratorContext(DbSchema dbSchema, JavaBeanConvertStrategy javaBeanConvertStrategy, JavaFieldConvertStrategy javaFieldConvertStrategy, MConfig mConfig, TemplateEngine templateEngine) {
         this.dbSchema = dbSchema;
         this.javaBeanConvertStrategy = javaBeanConvertStrategy;
         this.javaFieldConvertStrategy = javaFieldConvertStrategy;
-        this.moduleConfig = moduleConfig;
+        this.mConfig = mConfig;
         this.templateEngine = templateEngine;
     }
 
@@ -58,11 +58,11 @@ public class GeneratorContext {
         this.javaFieldConvertStrategy = javaFieldConvertStrategy;
     }
 
-    public ModuleConfig getModuleConfig() {
-        return moduleConfig;
+    public MConfig getmConfig() {
+        return mConfig;
     }
 
-    public void setModuleConfig(ModuleConfig moduleConfig) {
-        this.moduleConfig = moduleConfig;
+    public void setmConfig(MConfig mConfig) {
+        this.mConfig = mConfig;
     }
 }

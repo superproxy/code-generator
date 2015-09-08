@@ -11,7 +11,7 @@ public class DaoTplGenerator extends DbModelTplGenerator {
 
     public DaoTplGenerator(GeneratorContext context) {
         super((context));
-        ModelExtendHandler modelExtendHandler = new ServiceExtendHandler(context.getModuleConfig());
+        ModelExtendHandler modelExtendHandler = new ServiceExtendHandler(context.getmConfig());
         registerHandler(modelExtendHandler);
     }
 
@@ -23,12 +23,12 @@ public class DaoTplGenerator extends DbModelTplGenerator {
 
     @Override
     protected String getOutPath() {
-        String pkgDir = moduleConfig.getOutPath();
+        String pkgDir = mConfig.getOutPath();
 
-        pkgDir += File.separator + moduleConfig.getPackageName().replace(".", File.separator);
-        String module = moduleConfig.getModuleName();
+        pkgDir += File.separator + mConfig.getPackageName().replace(".", File.separator);
+        String module = mConfig.getModuleName();
         if (module != null) {
-            pkgDir += File.separator + moduleConfig.getModuleName();
+            pkgDir += File.separator + mConfig.getModuleName();
         }
         new File(pkgDir).mkdirs();
         String filepath = pkgDir + File.separator + getModel().getClassName() + ".java";

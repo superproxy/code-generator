@@ -12,7 +12,7 @@ public class SqlMapTplGenerator extends DbModelTplGenerator {
         super(generatorContext);
 
         //  增强处理模型
-        SqlMapMethodGenerator sqlMapMethodGenerator = new SqlMapMethodGeneratorImpl(moduleConfig);
+        SqlMapMethodGenerator sqlMapMethodGenerator = new SqlMapMethodGeneratorImpl(mConfig);
         registerHandler(sqlMapMethodGenerator);
     }
 
@@ -24,10 +24,10 @@ public class SqlMapTplGenerator extends DbModelTplGenerator {
 
     @Override
     protected String getOutPath() {
-        String pkgDir = moduleConfig.getOutPath();
-        String module = moduleConfig.getModuleName();
+        String pkgDir = mConfig.getOutPath();
+        String module = mConfig.getModuleName();
         if (module != null) {
-            pkgDir += File.separator + moduleConfig.getModuleName();
+            pkgDir += File.separator + mConfig.getModuleName();
         }
 
 //        pkgDir += File.separator + projectConfig.getPackageName().replace(".", File.separator);
