@@ -2,7 +2,7 @@ import com.github.superproxy.code.generator.app.MConfig;
 import com.github.superproxy.code.generator.app.ModulePartConfig;
 import com.github.superproxy.code.generator.app.ProjectConfig;
 import com.github.superproxy.code.generator.app.ProjectUtil;
-import com.github.superproxy.code.generator.core.FreeMarkerTemplateEngine;
+import com.github.superproxy.code.generator.core.engine.freemarker.FreeMarkerTplEngine;
 import com.github.superproxy.code.generator.core.Generator;
 import com.github.superproxy.code.generator.core.model.GeneratorContext;
 import com.github.superproxy.code.generator.core.model.ModuleConfig;
@@ -37,7 +37,6 @@ public class MbssGenerator {
         mConfig.setTableName("mbss_account");
         mConfig.setModuleName("account");
         mConfig.setTablePrefix("mbss");
-
 
         mConfig.addLayerConfig(new ModulePartConfig(ModelTplGenerator.class.getName(), "com.sunning.mbss.model", "Mapper"));
         mConfig.addLayerConfig(new ModulePartConfig(SqlMapTplGenerator.class.getName(), "", ""));
@@ -131,7 +130,7 @@ public class MbssGenerator {
         generatorContext.setDbSchema(dbSchema);
         generatorContext.setJavaBeanConvertStrategy(new JavaBeanConvertStrategyImpl());
         generatorContext.setJavaFieldConvertStrategy(new JavaFieldStrategyImpl());
-        generatorContext.setTemplateEngine(new FreeMarkerTemplateEngine());
+        generatorContext.setTemplateEngine(new FreeMarkerTplEngine());
         return generatorContext;
     }
 

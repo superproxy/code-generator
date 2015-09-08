@@ -1,7 +1,6 @@
 package com.github.superproxy.code.generator.core.model;
 
-import com.github.superproxy.code.generator.core.TemplateEngine;
-import com.github.superproxy.code.generator.core.TemplateGenerator;
+import com.github.superproxy.code.generator.core.engine.TemplateEngine;
 import com.github.superproxy.code.generator.core.model.db.DbSchema;
 import com.github.superproxy.code.generator.core.model.db2java.JavaBeanConvertStrategy;
 import com.github.superproxy.code.generator.core.model.db2java.JavaFieldConvertStrategy;

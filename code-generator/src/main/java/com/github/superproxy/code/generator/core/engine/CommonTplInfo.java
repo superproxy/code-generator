@@ -1,8 +1,8 @@
-package com.github.superproxy.code.generator.core;
+package com.github.superproxy.code.generator.core.engine;
 
 import java.util.Map;
 
-public class TplInfoImpl implements TplInfo {
+public class CommonTplInfo implements TplInfo {
 
     private String tplPath;
 

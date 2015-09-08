@@ -1,5 +1,7 @@
-package com.github.superproxy.code.generator.core;
+package com.github.superproxy.code.generator.core.engine.freemarker;
 
+import com.github.superproxy.code.generator.core.engine.TemplateEngine;
+import com.github.superproxy.code.generator.core.engine.TplInfo;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -12,7 +14,7 @@ import java.util.Map;
 /**
  * 基于模版机制的代码生成
  */
-public final class FreeMarkerTemplateEngine implements TemplateEngine {
+public final class FreeMarkerTplEngine implements TemplateEngine {
     /**
      * 获取模版引擎config
      *

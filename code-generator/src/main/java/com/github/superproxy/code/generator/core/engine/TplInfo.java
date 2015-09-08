@@ -1,4 +1,4 @@
-package com.github.superproxy.code.generator.core;
+package com.github.superproxy.code.generator.core.engine;
 
 import java.util.Map;
 

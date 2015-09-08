@@ -1,5 +1,7 @@
 package com.github.superproxy.code.generator.core;
 
+import com.github.superproxy.code.generator.core.engine.TemplateEngine;
+import com.github.superproxy.code.generator.core.engine.TplInfo;
 import com.github.superproxy.code.generator.core.model.ModuleConfig;
 
 /**

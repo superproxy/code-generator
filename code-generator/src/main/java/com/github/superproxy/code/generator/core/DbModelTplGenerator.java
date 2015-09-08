@@ -1,5 +1,7 @@
 package com.github.superproxy.code.generator.core;
 
+import com.github.superproxy.code.generator.core.engine.TplInfo;
+import com.github.superproxy.code.generator.core.engine.CommonTplInfo;
 import com.github.superproxy.code.generator.core.handler.ModelExtendHandler;
 import com.github.superproxy.code.generator.core.handler.ModelHandlerManager;
 import com.github.superproxy.code.generator.core.model.Field;
@@ -192,7 +194,7 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
 
     @Override
     public TplInfo getTplInfo() {
-        TplInfoImpl tplInfo = new TplInfoImpl();
+        CommonTplInfo tplInfo = new CommonTplInfo();
         //
         Map map = getMap();
         tplInfo.setModel(map);
