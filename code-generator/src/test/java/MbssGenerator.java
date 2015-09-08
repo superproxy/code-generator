@@ -1,4 +1,5 @@
 import com.github.superproxy.code.generator.app.*;
+import com.github.superproxy.code.generator.plugins.contoller.ControllerTplGenerator;
 import com.github.superproxy.code.generator.plugins.dao.DaoImplTplGenerator;
 import com.github.superproxy.code.generator.plugins.dao.DaoMapperTplGenerator;
 import com.github.superproxy.code.generator.plugins.dao.DaoTplGenerator;
@@ -28,13 +29,7 @@ public class MbssGenerator {
         moduleConfig.setModuleName("account");
         moduleConfig.setTablePrefix("mbss");
 
-        moduleConfig.addLayerConfig(new ModulePartConfig(ModelTplGenerator.class.getName(), "com.sunning.mbss.model", "Mapper"));
-        moduleConfig.addLayerConfig(new ModulePartConfig(SqlMapTplGenerator.class.getName(), "", ""));
-        moduleConfig.addLayerConfig(new ModulePartConfig(DaoTplGenerator.class.getName(), "com.sunning.mbss.dao", "Dao"));
-        moduleConfig.addLayerConfig(new ModulePartConfig(DaoImplTplGenerator.class.getName(), "com.sunning.mbss.dao.impl", "DaoImpl"));
-        moduleConfig.addLayerConfig(new ModulePartConfig(DaoMapperTplGenerator.class.getName(), "com.sunning.mbss.dao", "Mapper"));
-        moduleConfig.addLayerConfig(new ModulePartConfig(ServiceTplGenerator.class.getName(), "com.sunning.mbss.inf", "Service"));
-        moduleConfig.addLayerConfig(new ModulePartConfig(ServiceImplTplGenerator.class.getName(), "com.sunning.mbss.impl", "ServiceImpl"));
+        registerPart(moduleConfig);
         return moduleConfig;
     }
 
@@ -44,14 +39,20 @@ public class MbssGenerator {
         moduleConfig.setModuleName("video");
         moduleConfig.setTablePrefix("mbss");
 
-        moduleConfig.addLayerConfig(new ModulePartConfig(ModelTplGenerator.class.getName(), "com.sunning.mbss.model", "Mapper"));
-        moduleConfig.addLayerConfig(new ModulePartConfig(SqlMapTplGenerator.class.getName(), "", ""));
-        moduleConfig.addLayerConfig(new ModulePartConfig(DaoTplGenerator.class.getName(), "com.sunning.mbss.dao", "Dao"));
-        moduleConfig.addLayerConfig(new ModulePartConfig(DaoImplTplGenerator.class.getName(), "com.sunning.mbss.dao.impl", "DaoImpl"));
-        moduleConfig.addLayerConfig(new ModulePartConfig(DaoMapperTplGenerator.class.getName(), "com.sunning.mbss.dao", "Mapper"));
-        moduleConfig.addLayerConfig(new ModulePartConfig(ServiceTplGenerator.class.getName(), "com.sunning.mbss.inf", "Service"));
-        moduleConfig.addLayerConfig(new ModulePartConfig(ServiceImplTplGenerator.class.getName(), "com.sunning.mbss.impl", "ServiceImpl"));
+        registerPart(moduleConfig);
+
         return moduleConfig;
+    }
+
+    private void registerPart(ModuleConfig moduleConfig) {
+        moduleConfig.addModulePartConfig(new ModulePartConfig(ModelTplGenerator.class.getName(), "com.sunning.mbss.model", "Mapper"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(SqlMapTplGenerator.class.getName(), "", ""));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(DaoTplGenerator.class.getName(), "com.sunning.mbss.dao", "Dao", "Dao.ftl"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(DaoImplTplGenerator.class.getName(), "com.sunning.mbss.dao.impl", "DaoImpl"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(DaoMapperTplGenerator.class.getName(), "com.sunning.mbss.dao", "Mapper"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(ServiceTplGenerator.class.getName(), "com.sunning.mbss.inf", "Service"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(ServiceImplTplGenerator.class.getName(), "com.sunning.mbss.impl", "ServiceImpl"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(ControllerTplGenerator.class.getName(), "com.sunning.mbss.controller", "Controller"));
     }
 
     @Test
@@ -60,14 +61,14 @@ public class MbssGenerator {
     }
 
     @Test(dependsOnMethods = "testWrite")
-    public void testRead() throws Exception {
+    public void testGenFromFile() throws Exception {
         ProjectConfig projectConfig = ProjectUtil.read("src\\test\\resources\\mbss.yaml");
         System.out.println("@@@@@@@@@@@@@@@@@@@" + new File(".").getAbsolutePath());
         ProjectGenerator.process(projectConfig);
     }
 
     @Test
-    public void gen() throws Exception {
+    public void testGen() throws Exception {
         ProjectConfig projectConfig = buildProjectCofig();
         System.out.println("@@@@@@@@@@@@@@@@@@@" + new File(".").getAbsolutePath());
         ProjectGenerator.process(projectConfig);

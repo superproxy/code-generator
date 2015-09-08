@@ -1,5 +1,7 @@
 package com.github.superproxy.code.generator.core.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class MConfig {
     String author;
     String packageName;
@@ -11,7 +13,18 @@ public class MConfig {
     /**
      * 模版地址
      */
-    String tplsPath;
+    String tplsRoot;
+
+    String tplPath;
+
+    public String getTplPath() {
+        return tplPath;
+    }
+
+    public void setTplPath(String tplPath) {
+        this.tplPath = tplPath;
+    }
+
     /**
      * 输出路径
      */
@@ -34,12 +47,12 @@ public class MConfig {
         this.moduleName = moduleName;
     }
 
-    public String getTplsPath() {
-        return tplsPath;
+    public String getTplsRoot() {
+        return tplsRoot;
     }
 
-    public void setTplsPath(String tplsPath) {
-        this.tplsPath = tplsPath;
+    public void setTplsRoot(String tplsRoot) {
+        this.tplsRoot = tplsRoot;
     }
 
     public String getTablePrefix() {
@@ -88,5 +101,10 @@ public class MConfig {
 
     public void setTableName(String tableName) {
         this.tableName = tableName;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

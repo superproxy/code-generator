@@ -21,7 +21,7 @@ public class ModuleConfig implements Serializable {
 
     private List<ModulePartConfig> modulePartConfigList = new ArrayList<ModulePartConfig>();
 
-    public void addLayerConfig(ModulePartConfig modulePartConfig) {
+    public void addModulePartConfig(ModulePartConfig modulePartConfig) {
         modulePartConfigList.add(modulePartConfig);
     }
 

@@ -1,4 +1,4 @@
-package com.github.superproxy.code.generator.plugins.dao;
+package com.github.superproxy.code.generator.plugins.contoller;
 
 import com.github.superproxy.code.generator.core.DbModelTplGenerator;
 import com.github.superproxy.code.generator.core.handler.ModelExtendHandler;
@@ -7,21 +7,24 @@ import com.github.superproxy.code.generator.plugins.service.ServiceExtendHandler
 
 import java.io.File;
 
-public class DaoMapperTplGenerator extends DbModelTplGenerator {
+public class ControllerTplGenerator extends DbModelTplGenerator {
 
-    public DaoMapperTplGenerator(GeneratorContext generatorContext) {
+    public ControllerTplGenerator(GeneratorContext generatorContext) {
         super(generatorContext);
+
+        // 依赖
         ModelExtendHandler modelExtendHandler = new ServiceExtendHandler(mConfig);
         registerHandler(modelExtendHandler);
     }
 
     @Override
     protected String getTplPath() {
-        return "DaoMapper.ftl";
+        return "Controller.ftl";
     }
 
     @Override
     protected String getOutPath() {
+        //  model
         String pkgDir = mConfig.getOutPath();
 
         pkgDir += File.separator + mConfig.getPackageName().replace(".", File.separator);

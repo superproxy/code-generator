@@ -1,13 +1,13 @@
 package com.github.superproxy.code.generator.core;
 
-import com.github.superproxy.code.generator.core.engine.TplInfo;
 import com.github.superproxy.code.generator.core.engine.CommonTplInfo;
+import com.github.superproxy.code.generator.core.engine.TplInfo;
 import com.github.superproxy.code.generator.core.handler.ModelExtendHandler;
 import com.github.superproxy.code.generator.core.handler.ModelHandlerManager;
 import com.github.superproxy.code.generator.core.model.Field;
 import com.github.superproxy.code.generator.core.model.GeneratorContext;
-import com.github.superproxy.code.generator.core.model.Model;
 import com.github.superproxy.code.generator.core.model.MConfig;
+import com.github.superproxy.code.generator.core.model.Model;
 import com.github.superproxy.code.generator.core.model.db.ColumnInfo;
 import com.github.superproxy.code.generator.core.model.db.DbSchema;
 import com.github.superproxy.code.generator.core.model.db.TableInfo;
@@ -16,6 +16,7 @@ import com.github.superproxy.code.generator.core.model.db2java.JavaFieldConvertS
 import com.github.superproxy.code.generator.util.LogUtil;
 import com.github.superproxy.code.generator.util.Util;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -188,7 +189,7 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
 
     }
 
-    protected abstract String getTemplatePath();
+    protected abstract String getTplPath();
 
     protected abstract String getOutPath();
 
@@ -199,11 +200,22 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
         Map map = getMap();
         tplInfo.setModel(map);
 
-        tplInfo.setTplRoot(mConfig.getTplsPath());
+        tplInfo.setTplRoot(mConfig.getTplsRoot());
 
         tplInfo.setOutPath(getOutPath());
-        tplInfo.setTplPath(getTemplatePath());
+
+        if (StringUtils.isNotEmpty(mConfig.getTplPath())) {
+            tplInfo.setTplPath(mConfig.getTplPath());
+        } else {
+            tplInfo.setTplPath(getTplPath());
+
+        }
 
         return tplInfo;
+    }
+
+    @Override
+    public String getType() {
+        return this.getClass().getName();
     }
 }

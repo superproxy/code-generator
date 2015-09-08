@@ -18,7 +18,7 @@ public class DaoImplTplGenerator extends DbModelTplGenerator {
     }
 
     @Override
-    protected String getTemplatePath() {
+    protected String getTplPath() {
         return "DaoImpl.ftl";
     }
 

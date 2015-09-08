@@ -15,7 +15,7 @@ public class ServiceTplGenerator extends DbModelTplGenerator {
     }
 
     @Override
-    protected String getTemplatePath() {
+    protected String getTplPath() {
         return "Service.ftl";
     }
 

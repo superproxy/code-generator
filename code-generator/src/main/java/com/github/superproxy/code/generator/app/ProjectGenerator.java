@@ -52,7 +52,7 @@ public class ProjectGenerator {
         moduleConfig.setAuthor(projectConfig.getAuthor());
         moduleConfig.setDate(projectConfig.getDate());
         moduleConfig.setOutPath(projectConfig.getOutPath());
-        moduleConfig.setTplsPath(projectConfig.getTplRoot());
+        moduleConfig.setTplsRoot(projectConfig.getTplRoot());
         moduleConfig.setTableName(mConfig.getTableName());
         moduleConfig.setModuleName(mConfig.getModuleName());
         moduleConfig.setClassPostfix(partConfig.getClassPostfix());
