@@ -10,6 +10,15 @@
     <version>1.0.0</version>
     <modules>
         <module>../code-generator</module>
+        <module>../code-generator-web</module>
         <module>../code-generator-sample</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>gihub.superpoxy</groupId>
+            <artifactId>code-generator</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
 </project>

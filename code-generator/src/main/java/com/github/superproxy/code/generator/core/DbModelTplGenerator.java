@@ -67,7 +67,7 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
         for (TableInfo tableInfo : tableInfoList) {
 
             Model model = convert(tableInfo, dbModel.getmConfig(), dbModel);
-            setModel(model);
+            dbModel.setModel(model);
             Map root = extendModel(model, dbModel);
             mapList.add(root);
         }
@@ -87,16 +87,6 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
         LogUtil.debugInfo(root);
         root.put("model", model);
         return root;
-    }
-
-    protected Model model;
-
-    protected void setModel(Model model) {
-        this.model = model;
-    }
-
-    protected Model getModel() {
-        return this.model;
     }
 
     /**
@@ -164,7 +154,7 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
     }
 
     @Override
-    public String getType() {
+    public String getId() {
         return this.getClass().getName();
     }
 

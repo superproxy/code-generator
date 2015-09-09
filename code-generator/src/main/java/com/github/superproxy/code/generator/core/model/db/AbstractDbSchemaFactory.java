@@ -5,10 +5,12 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class DbSchemaFactoryImpl implements DbSchemaFactory {
-    public DbSchemaFactoryImpl(DataSource dataSource) {
+public abstract  class AbstractDbSchemaFactory implements DbSchemaFactory {
+    public AbstractDbSchemaFactory(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -86,8 +88,11 @@ public class DbSchemaFactoryImpl implements DbSchemaFactory {
     @Override
     public DbSchema genDbSchema(String[] tables) throws Exception {
         DbSchema dbSchema = new DbSchema();
-        schema = "root";
-        List<TableInfo> tableInfoList = getTablesAndViews(schema, tables);
+
+
+
+
+        List<TableInfo> tableInfoList = getTablesAndViews(getSchemaName(), tables);
         String s = Arrays.toString(tableInfoList.toArray());
 
         // 获取table列表
@@ -114,6 +119,8 @@ public class DbSchemaFactoryImpl implements DbSchemaFactory {
         return dbSchema;
 
     }
+
+    protected abstract String getSchemaName();
 
 
     /**

@@ -27,11 +27,11 @@ public class ModelTplGenerator extends DbModelTplGenerator {
         }
 
         new File(pkgDir).mkdirs();
-        return pkgDir + File.separator + model.getClassName() + ".java";
+        return pkgDir + File.separator +  dbModel.getModel().getClassName() + ".java";
     }
 
     @Override
-    public String getType() {
+    public String getId() {
         return this.getClass().getName();
     }
 }

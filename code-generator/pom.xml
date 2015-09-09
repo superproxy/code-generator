@@ -10,8 +10,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>code-generator</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <version>1.0.0</version>
+    <modules>
+        <module>../code-generator-web</module>
+    </modules>
     <dependencies>
 
         <dependency>
@@ -24,6 +27,7 @@
             <artifactId>commons-beanutils</artifactId>
             <version>1.8.3</version>
         </dependency>
+
         <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-core</artifactId>
@@ -31,13 +35,6 @@
             <type>jar</type>
             <!--<scope>test</scope>-->
         </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <scope>test</scope>
-            <version>6.4</version>
-        </dependency>
-
         <dependency>
             <groupId>org.jyaml</groupId>
             <artifactId>jyaml</artifactId>
@@ -55,21 +52,46 @@
             <artifactId>druid</artifactId>
             <version>1.0.12</version>
         </dependency>
+
+        
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.34</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.178</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
             <version>3.2.4.RELEASE</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>3.2.4.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+            <version>6.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>3.2.4.RELEASE</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

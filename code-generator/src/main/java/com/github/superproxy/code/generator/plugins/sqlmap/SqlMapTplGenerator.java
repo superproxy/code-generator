@@ -32,12 +32,13 @@ public class SqlMapTplGenerator extends DbModelTplGenerator {
 //        pkgDir += File.separator + projectConfig.getPackageName().replace(".", File.separator);
 
         new File(pkgDir).mkdirs();
-        String filepath = pkgDir + File.separator + "sqlMap_" + model.getShortClassName().substring(0, 1).toLowerCase() + model.getShortClassName().substring(1) + ".xml";
-        return filepath;
+        return pkgDir + File.separator + "sqlMap_" +
+                dbModel.getModel().getShortClassName().substring(0, 1).toLowerCase() +
+                dbModel.getModel().getShortClassName().substring(1) + ".xml";
     }
 
     @Override
-    public String getType() {
+    public String getId() {
         return this.getClass().getName();
     }
 }

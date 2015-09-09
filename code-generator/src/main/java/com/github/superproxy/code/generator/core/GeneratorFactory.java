@@ -8,7 +8,7 @@ public class GeneratorFactory {
     private static Map<String, Generator> generatorMap = new HashMap<String, Generator>();
 
     public static  void registerGenerator(Generator generator) {
-        generatorMap.put(generator.getType(), generator);
+        generatorMap.put(generator.getId(), generator);
     }
 
     public static Generator getGenerator(String type) {

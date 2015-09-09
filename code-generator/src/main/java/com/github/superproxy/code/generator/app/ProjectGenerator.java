@@ -8,11 +8,10 @@ import com.github.superproxy.code.generator.core.model.GeneratorContext;
 import com.github.superproxy.code.generator.core.model.MConfig;
 import com.github.superproxy.code.generator.core.model.db.DbSchema;
 import com.github.superproxy.code.generator.core.model.db.DbSchemaFactory;
-import com.github.superproxy.code.generator.core.model.db.DbSchemaFactoryImpl;
+import com.github.superproxy.code.generator.core.model.db.H2DbSchemaFactory;
+import com.github.superproxy.code.generator.core.model.db.MysqlDbSchemaFactory;
 import com.github.superproxy.code.generator.core.model.db2java.impl.JavaBeanConvertStrategyImpl;
 import com.github.superproxy.code.generator.core.model.db2java.impl.JavaFieldStrategyImpl;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Constructor;
@@ -22,19 +21,24 @@ import java.util.Map;
 public class ProjectGenerator {
 
     public void main(String[] args) throws Exception {
-        gen(args[0]);
+        new ProjectGenerator().gen(args[0]);
     }
+
+    private DataSource dataSource = null;
+    private DbSchemaFactory dbSchemaFactory;
 
     private void gen(String path) throws Exception {
         ProjectConfig projectConfig = ProjectUtil.read(path);
+
         process(projectConfig);
     }
 
-    public static void process(ProjectConfig projectConfig) throws Exception {
+    public void process(ProjectConfig projectConfig) throws Exception {
+        init(projectConfig);
         for (ModuleConfig mConfig : projectConfig.getModules()) {
             for (ModulePartConfig partConfig : mConfig.getModulePartConfigList()) {
                 MConfig moduleConfig = covert2ModuleConfig(projectConfig, mConfig, partConfig);
-                DbSchema dbSchema = getDbSchema(projectConfig.getDbConfig(), moduleConfig.getTableName());
+                DbSchema dbSchema = dbSchemaFactory.genDbSchema(new String[]{moduleConfig.getTableName()});
                 GeneratorContext generatorContext = buildGeneratorContext(moduleConfig, dbSchema);
                 Generator generator = GeneratorFactory.getGenerator(partConfig.getGenerator());
                 if (generator == null) {
@@ -44,6 +48,17 @@ public class ProjectGenerator {
                 }
                 generator.generator(generatorContext);
             }
+        }
+    }
+
+    private void init(ProjectConfig projectConfig) throws Exception {
+        dataSource = getDataSource2(projectConfig.getDbConfig());
+        if (projectConfig.getDbConfig().getDriverClass().contains("h2")) {
+            dbSchemaFactory = new H2DbSchemaFactory(dataSource);
+        } else if (projectConfig.getDbConfig().getDriverClass().contains("mysql")) {
+            dbSchemaFactory = new MysqlDbSchemaFactory(dataSource);
+        } else {
+            throw new UnsupportedOperationException("unsupported db" + projectConfig.getDbConfig().toString());
         }
     }
 
@@ -61,14 +76,6 @@ public class ProjectGenerator {
     }
 
 
-    private static DbSchema getDbSchema(DbConfig dbConfig, String tableName) throws Exception {
-        DataSource dataSource = getDataSource2(dbConfig);
-        DbSchemaFactory dbSchemaFactory = new DbSchemaFactoryImpl(dataSource);
-        // 所有表
-//        DbSchema dbSchema = dbSchemaFactory.genDbSchema(null);
-        return dbSchemaFactory.genDbSchema(new String[]{tableName});
-    }
-
     private static GeneratorContext buildGeneratorContext(MConfig mConfig, DbSchema dbSchema) {
         GeneratorContext generatorContext = new GeneratorContext();
         generatorContext.setmConfig(mConfig);
@@ -79,23 +86,14 @@ public class ProjectGenerator {
         return generatorContext;
     }
 
-    private static DataSource getDataSource() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring-datasource.xml");
-        return (DataSource) context.getBean("dataSource");
-    }
 
-    private static DataSource dataSource = null;
-
-    private static DataSource getDataSource2(DbConfig dbConfig) throws Exception {
-        if (dataSource == null) {
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("driverClassName", dbConfig.getDriverClass());
-            map.put("url", dbConfig.getUrl());
-            map.put("username", dbConfig.getUserName());
-            map.put("password", dbConfig.getPassword());
-            dataSource = DruidDataSourceFactory.createDataSource(map);
-        }
-        return dataSource;
+    private DataSource getDataSource2(DbConfig dbConfig) throws Exception {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("driverClassName", dbConfig.getDriverClass());
+        map.put("url", dbConfig.getUrl());
+        map.put("username", dbConfig.getUserName());
+        map.put("password", dbConfig.getPassword());
+        return DruidDataSourceFactory.createDataSource(map);
     }
 
 }

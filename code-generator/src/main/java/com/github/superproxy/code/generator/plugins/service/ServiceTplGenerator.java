@@ -30,11 +30,11 @@ public class ServiceTplGenerator extends DbModelTplGenerator {
             pkgDir += File.separator + mConfig.getModuleName();
         }
         new File(pkgDir).mkdirs();
-        return pkgDir + File.separator + model.getClassName() + ".java";
+        return pkgDir + File.separator +  dbModel.getModel().getClassName() + ".java";
     }
 
     @Override
-    public String getType() {
+    public String getId() {
         return this.getClass().getName();
     }
 

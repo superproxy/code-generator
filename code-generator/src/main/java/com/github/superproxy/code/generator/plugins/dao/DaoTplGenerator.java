@@ -32,13 +32,13 @@ public class DaoTplGenerator extends DbModelTplGenerator {
             pkgDir += File.separator + mConfig.getModuleName();
         }
         new File(pkgDir).mkdirs();
-        String filepath = pkgDir + File.separator + getModel().getClassName() + ".java";
+        String filepath = pkgDir + File.separator +  dbModel.getModel().getClassName() + ".java";
         return filepath;
     }
 
 
     @Override
-    public String getType() {
+    public String getId() {
         return this.getClass().getName();
     }
 }
