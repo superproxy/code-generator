@@ -18,9 +18,19 @@ public class MbssGenerator {
         projectConfig.setDate("2014-12-30");
         projectConfig.setOutPath("d:/env");
         projectConfig.setTplRoot(new File("src\\main\\resources\\templates\\snf").getAbsolutePath());
+        projectConfig.setDbConfig(buildDbConfig());
         projectConfig.addModule(getModuleConfig());
         projectConfig.addModule(getModuleConfig2());
         return projectConfig;
+    }
+
+    private DbConfig buildDbConfig() {
+        DbConfig dbConfig = new DbConfig();
+        dbConfig.setDriverClass("com.mysql.jdbc.Driver");
+        dbConfig.setUrl("jdbc:mysql://10.27.25.97:3306/mbssdb?characterEncoding=utf8");
+        dbConfig.setUserName("root");
+        dbConfig.setPassword("sn123456");
+        return dbConfig;
     }
 
     private ModuleConfig getModuleConfig() {

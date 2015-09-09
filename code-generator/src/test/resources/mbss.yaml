@@ -1,6 +1,11 @@
 --- !com.github.superproxy.code.generator.app.ProjectConfig
 author: "14120295"
 date: 2014-12-30
+dbConfig: !com.github.superproxy.code.generator.app.DbConfig
+  driverClass: com.mysql.jdbc.Driver
+  password: sn123456
+  url: "jdbc:mysql://10.27.25.97:3306/mbssdb?characterEncoding=utf8"
+  userName: root
 modules: 
   - !com.github.superproxy.code.generator.app.ModuleConfig
     moduleName: account

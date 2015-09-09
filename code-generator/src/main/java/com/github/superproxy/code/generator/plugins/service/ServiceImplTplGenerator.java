@@ -1,26 +1,27 @@
 package com.github.superproxy.code.generator.plugins.service;
 
+import com.github.superproxy.code.generator.core.DbModel;
 import com.github.superproxy.code.generator.core.DbModelTplGenerator;
 import com.github.superproxy.code.generator.core.handler.ModelExtendHandler;
-import com.github.superproxy.code.generator.core.model.GeneratorContext;
+import com.github.superproxy.code.generator.core.model.MConfig;
 
 import java.io.File;
 
 public class ServiceImplTplGenerator extends DbModelTplGenerator {
 
-    public ServiceImplTplGenerator(GeneratorContext generatorContext) {
-        super(generatorContext);
-        ModelExtendHandler modelExtendHandler = new ServiceExtendHandler(mConfig);
+    public ServiceImplTplGenerator() {
+        ModelExtendHandler modelExtendHandler = new ServiceExtendHandler();
         registerHandler(modelExtendHandler);
     }
 
     @Override
-    protected String getTplPath() {
+    protected String getTplPath(DbModel dbModel) {
         return "ServiceImpl.ftl";
     }
 
     @Override
-    protected String getOutPath() {
+    protected String getOutPath(DbModel dbModel) {
+        MConfig mConfig = dbModel.getmConfig();
         String pkgDir = mConfig.getOutPath();
 
         pkgDir += File.separator + mConfig.getPackageName().replace(".", File.separator);

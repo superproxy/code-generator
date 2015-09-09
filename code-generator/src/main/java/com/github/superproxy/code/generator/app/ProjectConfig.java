@@ -18,6 +18,16 @@ public class ProjectConfig implements Serializable {
      * 输出路径
      */
     private String outPath;
+
+    public DbConfig getDbConfig() {
+        return dbConfig;
+    }
+
+    public void setDbConfig(DbConfig dbConfig) {
+        this.dbConfig = dbConfig;
+    }
+
+    private DbConfig dbConfig;
     private List<ModuleConfig> modules = new ArrayList<ModuleConfig>();
 
     public List<ModuleConfig> getModules() {

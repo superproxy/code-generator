@@ -1,7 +1,5 @@
 package com.github.superproxy.code.generator.core;
 
-import com.github.superproxy.code.generator.core.engine.CommonTplInfo;
-import com.github.superproxy.code.generator.core.engine.TplInfo;
 import com.github.superproxy.code.generator.core.handler.ModelExtendHandler;
 import com.github.superproxy.code.generator.core.handler.ModelHandlerManager;
 import com.github.superproxy.code.generator.core.model.Field;
@@ -9,11 +7,13 @@ import com.github.superproxy.code.generator.core.model.GeneratorContext;
 import com.github.superproxy.code.generator.core.model.MConfig;
 import com.github.superproxy.code.generator.core.model.Model;
 import com.github.superproxy.code.generator.core.model.db.ColumnInfo;
+import com.github.superproxy.code.generator.core.model.db.DbSchema;
 import com.github.superproxy.code.generator.core.model.db.TableInfo;
+import com.github.superproxy.code.generator.core.model.db2java.JavaBeanConvertStrategy;
+import com.github.superproxy.code.generator.core.model.db2java.JavaFieldConvertStrategy;
 import com.github.superproxy.code.generator.util.LogUtil;
 import com.github.superproxy.code.generator.util.Util;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -21,28 +21,57 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 基于DB模型的模版代码生成器
- */
-public abstract class DbModelTplGenerator extends TemplateGenerator {
+public class DbModel {
+
+    protected String templatePath;
+
+    public void setTemplatePath(String templatePath) {
+        this.templatePath = templatePath;
+    }
+
+    protected DbSchema dbSchema;
+    protected JavaFieldConvertStrategy javaFieldConvertStrategy;
+    protected JavaBeanConvertStrategy javaBeanConvertStrategy;
+    protected MConfig mConfig;
 
     private ModelHandlerManager modelHandlerManager = new ModelHandlerManager();
 
-    public DbModelTplGenerator() {
+    public DbModel() {
 
     }
 
-    @Override
-    public void generator(Object o) {
-        if (o instanceof GeneratorContext) {
-            GeneratorContext generatorContext = (GeneratorContext) o;
-            this.templateEngine = generatorContext.getTemplateEngine();
-            DbModel dbModel = new DbModel(generatorContext);
-            super.generator(buildTplInfo(dbModel));
-        }
 
+    public DbModel(GeneratorContext generatorContext) {
+        this.mConfig = generatorContext.getmConfig();
+        this.dbSchema = generatorContext.getDbSchema();
+        this.javaBeanConvertStrategy = generatorContext.getJavaBeanConvertStrategy();
+        this.javaFieldConvertStrategy = generatorContext.getJavaFieldConvertStrategy();
     }
 
+
+    public DbSchema getDbSchema() {
+        return dbSchema;
+    }
+
+    public void setDbSchema(DbSchema dbSchema) {
+        this.dbSchema = dbSchema;
+    }
+
+    public JavaBeanConvertStrategy getJavaBeanConvertStrategy() {
+        return javaBeanConvertStrategy;
+    }
+
+    public void setJavaBeanConvertStrategy(JavaBeanConvertStrategy javaBeanConvertStrategy) {
+        this.javaBeanConvertStrategy = javaBeanConvertStrategy;
+    }
+
+    public JavaFieldConvertStrategy getJavaFieldConvertStrategy() {
+        return javaFieldConvertStrategy;
+    }
+
+    public void setJavaFieldConvertStrategy(JavaFieldConvertStrategy javaFieldConvertStrategy) {
+        this.javaFieldConvertStrategy = javaFieldConvertStrategy;
+    }
 
     public ModelHandlerManager getModelHandlerManager() {
         return modelHandlerManager;
@@ -50,6 +79,14 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
 
     public void setModelHandlerManager(ModelHandlerManager modelHandlerManager) {
         this.modelHandlerManager = modelHandlerManager;
+    }
+
+    public MConfig getmConfig() {
+        return mConfig;
+    }
+
+    public void setmConfig(MConfig mConfig) {
+        this.mConfig = mConfig;
     }
 
     public void registerHandler(ModelExtendHandler handler) {
@@ -60,30 +97,30 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
         modelHandlerManager.handler(mConfig, model, root);
     }
 
-    protected List<Map> getMaps(DbModel dbModel) {
+    protected List<Map> getMaps() {
         // 多个模型 一个表一个模型
-        List<TableInfo> tableInfoList = dbModel.getDbSchema().getTableInfoList();
+        List<TableInfo> tableInfoList = this.dbSchema.getTableInfoList();
         List<Map> mapList = new ArrayList<Map>();
         for (TableInfo tableInfo : tableInfoList) {
 
-            Model model = convert(tableInfo, dbModel.getmConfig(), dbModel);
+            Model model = convert(tableInfo, mConfig);
             setModel(model);
-            Map root = extendModel(model, dbModel);
+            Map root = process(model);
             mapList.add(root);
         }
         return mapList;
     }
 
-    protected Map getMap(DbModel dbModel) {
-        return getMaps(dbModel).get(0);
+    protected Map getMap() {
+        return getMaps().get(0);
     }
 
-    private Map extendModel(Model model, DbModel dbModel) {
+    private Map process(Model model) {
         // Create the root hash
         Map root = new HashMap();
         // 对象信息
-        Util.object2Map(root, dbModel.getmConfig());
-        modelHandlerManager.handler(dbModel.getmConfig(), model, root);
+        Util.object2Map(root, mConfig);
+        modelHandlerManager.handler(mConfig, model, root);
         LogUtil.debugInfo(root);
         root.put("model", model);
         return root;
@@ -105,8 +142,8 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
      * @param tableInfo
      * @return
      */
-    private Model convert(TableInfo tableInfo, MConfig mConfig, DbModel dbModel) {
-        Model model = new Model(dbModel.getJavaBeanConvertStrategy(), mConfig);
+    private Model convert(TableInfo tableInfo, MConfig mConfig) {
+        Model model = new Model(javaBeanConvertStrategy, mConfig);
         try {
 
             // 基础表信息
@@ -117,7 +154,7 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
             List<Field> pkFieldList = new ArrayList<Field>();
             for (ColumnInfo c : model.getPkColumnList()) {
 
-                Field field = new Field(dbModel.getJavaFieldConvertStrategy());
+                Field field = new Field(javaFieldConvertStrategy);
                 BeanUtils.copyProperties(field, c);
                 pkFieldList.add(field);
             }
@@ -129,7 +166,7 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
             List<Field> fieldList = new ArrayList<Field>();
             for (ColumnInfo c : model.getColumnInfoList()) {
 
-                Field field = new Field(dbModel.getJavaFieldConvertStrategy());
+                Field field = new Field(javaFieldConvertStrategy);
                 BeanUtils.copyProperties(field, c);
                 fieldList.add(field);
             }
@@ -142,34 +179,5 @@ public abstract class DbModelTplGenerator extends TemplateGenerator {
         }
         return model;
 
-    }
-
-    protected abstract String getTplPath(DbModel dbModel);
-
-    protected abstract String getOutPath(DbModel dbModel);
-
-    private TplInfo buildTplInfo(DbModel dbModel) {
-        CommonTplInfo tplInfo = new CommonTplInfo();
-        MConfig mConfig = dbModel.getmConfig();
-        Map map = getMap(dbModel);
-        tplInfo.setModel(map);
-        tplInfo.setTplRoot(mConfig.getTplsRoot());
-        tplInfo.setOutPath(getOutPath(dbModel));
-        if (StringUtils.isNotEmpty(mConfig.getTplPath())) {
-            tplInfo.setTplPath(mConfig.getTplPath());
-        } else {
-            tplInfo.setTplPath(getTplPath(dbModel));
-        }
-        return tplInfo;
-    }
-
-    @Override
-    public String getType() {
-        return this.getClass().getName();
-    }
-
-    @Override
-    public String getDesciprtion() {
-        return null;
     }
 }

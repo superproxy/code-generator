@@ -1,5 +1,6 @@
 package com.github.superproxy.code.generator.core.handler;
 
+import com.github.superproxy.code.generator.core.model.MConfig;
 import com.github.superproxy.code.generator.core.model.Model;
 
 import java.util.ArrayList;
@@ -17,11 +18,11 @@ public class ModelHandlerManager {
         modelExtendHandlerList.add(handler);
     }
 
-    public void handler(Model model, Map root) {
+    public void handler(MConfig mConfig, Model model, Map root) {
         for (ModelExtendHandler modelExtendHandler : modelExtendHandlerList) {
             Map extendMap = new HashMap();
             model.getExtra().put(modelExtendHandler.handlerId(), extendMap);
-            modelExtendHandler.extendModel(model, extendMap);
+            modelExtendHandler.extendModel(mConfig, model, extendMap);
         }
     }
 

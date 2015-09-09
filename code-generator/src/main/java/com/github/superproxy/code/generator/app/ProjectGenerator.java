@@ -1,6 +1,8 @@
 package com.github.superproxy.code.generator.app;
 
+import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.github.superproxy.code.generator.core.Generator;
+import com.github.superproxy.code.generator.core.GeneratorFactory;
 import com.github.superproxy.code.generator.core.engine.freemarker.FreeMarkerTplEngine;
 import com.github.superproxy.code.generator.core.model.GeneratorContext;
 import com.github.superproxy.code.generator.core.model.MConfig;
@@ -14,6 +16,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProjectGenerator {
 
@@ -30,19 +34,15 @@ public class ProjectGenerator {
         for (ModuleConfig mConfig : projectConfig.getModules()) {
             for (ModulePartConfig partConfig : mConfig.getModulePartConfigList()) {
                 MConfig moduleConfig = covert2ModuleConfig(projectConfig, mConfig, partConfig);
-                DbSchema dbSchema = getDbSchema(moduleConfig.getTableName());
-
-                GeneratorContext generatorContext = getGeneratorContext(moduleConfig, dbSchema);
-//                GeneratorFactory.registerGenerator(new ModelTplGenerator(generatorContext));
-//                GeneratorFactory.registerGenerator(new SqlMapTplGenerator(generatorContext));
-//                GeneratorFactory.registerGenerator(new DaoTplGenerator(generatorContext));
-//                GeneratorFactory.registerGenerator(new DaoImplTplGenerator(generatorContext));
-//                GeneratorFactory.registerGenerator(new DaoMapperTplGenerator(generatorContext));
-//                GeneratorFactory.registerGenerator(new ServiceTplGenerator(generatorContext));
-//                GeneratorFactory.registerGenerator(new ServiceImplTplGenerator(generatorContext));
-                Constructor<?> constructor = Class.forName(partConfig.getGenerator()).getConstructor(GeneratorContext.class);
-                Generator generator = (Generator) constructor.newInstance(generatorContext);
-                generator.generator();
+                DbSchema dbSchema = getDbSchema(projectConfig.getDbConfig(), moduleConfig.getTableName());
+                GeneratorContext generatorContext = buildGeneratorContext(moduleConfig, dbSchema);
+                Generator generator = GeneratorFactory.getGenerator(partConfig.getGenerator());
+                if (generator == null) {
+                    Constructor<?> constructor = Class.forName(partConfig.getGenerator()).getConstructor();
+                    generator = (Generator) constructor.newInstance();
+                    GeneratorFactory.registerGenerator(generator);
+                }
+                generator.generator(generatorContext);
             }
         }
     }
@@ -61,15 +61,15 @@ public class ProjectGenerator {
     }
 
 
-    private static DbSchema getDbSchema(String tableName) throws Exception {
-        DataSource dataSource = getDataSource();
+    private static DbSchema getDbSchema(DbConfig dbConfig, String tableName) throws Exception {
+        DataSource dataSource = getDataSource2(dbConfig);
         DbSchemaFactory dbSchemaFactory = new DbSchemaFactoryImpl(dataSource);
         // 所有表
 //        DbSchema dbSchema = dbSchemaFactory.genDbSchema(null);
         return dbSchemaFactory.genDbSchema(new String[]{tableName});
     }
 
-    private static GeneratorContext getGeneratorContext(MConfig mConfig, DbSchema dbSchema) {
+    private static GeneratorContext buildGeneratorContext(MConfig mConfig, DbSchema dbSchema) {
         GeneratorContext generatorContext = new GeneratorContext();
         generatorContext.setmConfig(mConfig);
         generatorContext.setDbSchema(dbSchema);
@@ -82,6 +82,20 @@ public class ProjectGenerator {
     private static DataSource getDataSource() {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-datasource.xml");
         return (DataSource) context.getBean("dataSource");
+    }
+
+    private static DataSource dataSource = null;
+
+    private static DataSource getDataSource2(DbConfig dbConfig) throws Exception {
+        if (dataSource == null) {
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("driverClassName", dbConfig.getDriverClass());
+            map.put("url", dbConfig.getUrl());
+            map.put("username", dbConfig.getUserName());
+            map.put("password", dbConfig.getPassword());
+            dataSource = DruidDataSourceFactory.createDataSource(map);
+        }
+        return dataSource;
     }
 
 }

@@ -1,28 +1,29 @@
 package com.github.superproxy.code.generator.plugins.dao;
 
+import com.github.superproxy.code.generator.core.DbModel;
 import com.github.superproxy.code.generator.core.DbModelTplGenerator;
 import com.github.superproxy.code.generator.core.handler.ModelExtendHandler;
-import com.github.superproxy.code.generator.core.model.GeneratorContext;
+import com.github.superproxy.code.generator.core.model.MConfig;
 import com.github.superproxy.code.generator.plugins.service.ServiceExtendHandler;
 
 import java.io.File;
 
 public class DaoTplGenerator extends DbModelTplGenerator {
 
-    public DaoTplGenerator(GeneratorContext context) {
-        super((context));
-        ModelExtendHandler modelExtendHandler = new ServiceExtendHandler(context.getmConfig());
+    public DaoTplGenerator() {
+        ModelExtendHandler modelExtendHandler = new ServiceExtendHandler();
         registerHandler(modelExtendHandler);
     }
 
 
     @Override
-    protected String getTplPath() {
+    protected String getTplPath(DbModel dbModel) {
         return "Dao.ftl";
     }
 
     @Override
-    protected String getOutPath() {
+    protected String getOutPath(DbModel dbModel) {
+        MConfig mConfig = dbModel.getmConfig();
         String pkgDir = mConfig.getOutPath();
 
         pkgDir += File.separator + mConfig.getPackageName().replace(".", File.separator);

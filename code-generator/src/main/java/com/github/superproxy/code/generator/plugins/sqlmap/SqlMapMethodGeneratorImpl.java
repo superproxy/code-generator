@@ -1,9 +1,9 @@
 package com.github.superproxy.code.generator.plugins.sqlmap;
 
-import com.github.superproxy.code.generator.core.model.Model;
-import com.github.superproxy.code.generator.core.model.db.ColumnInfo;
 import com.github.superproxy.code.generator.core.model.Field;
 import com.github.superproxy.code.generator.core.model.MConfig;
+import com.github.superproxy.code.generator.core.model.Model;
+import com.github.superproxy.code.generator.core.model.db.ColumnInfo;
 
 import java.util.Map;
 
@@ -13,10 +13,8 @@ public class SqlMapMethodGeneratorImpl implements SqlMapMethodGenerator {
     public static final String INSERT_CHOOSE_2 = "<#if %1$s?exists && %1$s != \"\"> %2$s </#if>";
     public static final String INSERT_CHOOSE_3 = "<#if %1$s?exists && %1$s != \"\"> :%1$s, </#if>";
     public static final String INSERT_CHOOSE_4 = "<#if %1$s?exists && %1$s != \"\"> :%1$s </#if>";
-    MConfig mConfig;
 
-    public SqlMapMethodGeneratorImpl(MConfig mConfig) {
-        this.mConfig = mConfig;
+    public SqlMapMethodGeneratorImpl() {
     }
 
     @Override
@@ -273,10 +271,9 @@ public class SqlMapMethodGeneratorImpl implements SqlMapMethodGenerator {
         return sb.toString();
     }
 
-
-    public void extendModel(Model model, Map sqlMap) {
-        //  下划线的  account_history
-        sqlMap.put("name", getSqlMapName(model));
+    @Override
+    public void extendModel(MConfig mConfig, Model model, Map sqlMap) {
+        sqlMap.put("name", getSqlMapName(model, mConfig));
         sqlMap.put("insert", getInsertGenerator(model));
         sqlMap.put("insert2", getInsert2Generator(model));
         sqlMap.put("update", updateGenerator(model));
@@ -286,13 +283,15 @@ public class SqlMapMethodGeneratorImpl implements SqlMapMethodGenerator {
         sqlMap.put("deleteById", deleteByIdGenerator(model));
     }
 
-    private String getSqlMapName(Model model) {
+
+    private String getSqlMapName(Model model, MConfig mConfig) {
         return model.getTableName().replace(mConfig.getTablePrefix() + "_", "");
     }
 
     public String handlerId() {
         return "sqlMap";
     }
+
 
     @Override
     public String deleteByIdGenerator(Model model) {
