@@ -1,14 +1,14 @@
 package com.github.superproxy.code.generator.plugins.dao;
 
 import com.github.superproxy.code.generator.core.DbModel;
-import com.github.superproxy.code.generator.core.DbModelTplGenerator;
+import com.github.superproxy.code.generator.core.generator.ModelTplGenerator;
 import com.github.superproxy.code.generator.core.handler.ModelExtendHandler;
-import com.github.superproxy.code.generator.core.model.MConfig;
-import com.github.superproxy.code.generator.plugins.service.ServiceExtendHandler;
+import com.github.superproxy.code.generator.core.model.ModelConfig;
+import com.github.superproxy.code.generator.core.handler.support.java.service.ServiceExtendHandler;
 
 import java.io.File;
 
-public class DaoImplTplGenerator extends DbModelTplGenerator {
+public class DaoImplTplGenerator extends ModelTplGenerator {
 
     public DaoImplTplGenerator() {
         // 依赖
@@ -24,14 +24,14 @@ public class DaoImplTplGenerator extends DbModelTplGenerator {
     @Override
     protected String getOutPath(DbModel dbModel) {
         //  model
-        MConfig mConfig = dbModel.getmConfig();
+        ModelConfig modelConfig = dbModel.getModelConfig();
         //  model
-        String pkgDir = mConfig.getOutPath();
+        String pkgDir = modelConfig.getOutPath();
 
-        pkgDir += File.separator + mConfig.getPackageName().replace(".", File.separator);
-        String module = mConfig.getModuleName();
+        pkgDir += File.separator + modelConfig.getPackageName().replace(".", File.separator);
+        String module = modelConfig.getModuleName();
         if (module != null) {
-            pkgDir += File.separator + mConfig.getModuleName();
+            pkgDir += File.separator + modelConfig.getModuleName();
         }
         new File(pkgDir).mkdirs();
         String filepath = pkgDir + File.separator +  dbModel.getModel().getClassName() + ".java";

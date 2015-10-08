@@ -1,29 +1,23 @@
 package com.github.superproxy.code.generator.plugins.model;
 
 import com.github.superproxy.code.generator.core.DbModel;
-import com.github.superproxy.code.generator.core.DbModelTplGenerator;
-import com.github.superproxy.code.generator.core.model.MConfig;
+import com.github.superproxy.code.generator.core.model.ModelConfig;
 
 import java.io.File;
 
-public class ModelTplGenerator extends DbModelTplGenerator {
+public class ModelTplGenerator extends com.github.superproxy.code.generator.core.generator.ModelTplGenerator {
 
-    public ModelTplGenerator() {
-    }
-
-    @Override
     protected String getTplPath(DbModel dbModel) {
         return "Model.ftl";
     }
 
-    @Override
     protected String getOutPath(DbModel dbModel) {
-        MConfig mConfig = dbModel.getmConfig();
-        String pkgDir = mConfig.getOutPath();
-        pkgDir += File.separator + mConfig.getPackageName().replace(".", File.separator);
-        String module = mConfig.getModuleName();
+        ModelConfig modelConfig = dbModel.getModelConfig();
+        String pkgDir = modelConfig.getOutPath();
+        pkgDir += File.separator + modelConfig.getPackageName().replace(".", File.separator);
+        String module = modelConfig.getModuleName();
         if (module != null) {
-            pkgDir += File.separator + mConfig.getModuleName();
+            pkgDir += File.separator + modelConfig.getModuleName();
         }
 
         new File(pkgDir).mkdirs();

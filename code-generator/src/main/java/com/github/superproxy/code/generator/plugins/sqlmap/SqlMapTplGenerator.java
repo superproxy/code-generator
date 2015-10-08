@@ -1,12 +1,12 @@
 package com.github.superproxy.code.generator.plugins.sqlmap;
 
 import com.github.superproxy.code.generator.core.DbModel;
-import com.github.superproxy.code.generator.core.DbModelTplGenerator;
-import com.github.superproxy.code.generator.core.model.MConfig;
+import com.github.superproxy.code.generator.core.generator.ModelTplGenerator;
+import com.github.superproxy.code.generator.core.model.ModelConfig;
 
 import java.io.File;
 
-public class SqlMapTplGenerator extends DbModelTplGenerator {
+public class SqlMapTplGenerator extends ModelTplGenerator {
 
 
     public SqlMapTplGenerator() {
@@ -22,11 +22,11 @@ public class SqlMapTplGenerator extends DbModelTplGenerator {
 
     @Override
     protected String getOutPath(DbModel dbModel) {
-        MConfig mConfig = dbModel.getmConfig();
-        String pkgDir = mConfig.getOutPath();
-        String module = mConfig.getModuleName();
+        ModelConfig modelConfig = dbModel.getModelConfig();
+        String pkgDir = modelConfig.getOutPath();
+        String module = modelConfig.getModuleName();
         if (module != null) {
-            pkgDir += File.separator + mConfig.getModuleName();
+            pkgDir += File.separator + modelConfig.getModuleName();
         }
 
 //        pkgDir += File.separator + projectConfig.getPackageName().replace(".", File.separator);

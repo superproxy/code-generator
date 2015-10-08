@@ -1,22 +1,16 @@
 package com.github.superproxy.code.generator.plugins.contoller;
 
-import com.github.superproxy.code.generator.core.DbModel;
-import com.github.superproxy.code.generator.core.DbModelTplGenerator;
-import com.github.superproxy.code.generator.core.handler.ModelExtendHandler;
-import com.github.superproxy.code.generator.core.model.MConfig;
-import com.github.superproxy.code.generator.plugins.service.ServiceExtendHandler;
+import com.github.superproxy.code.generator.core.generator.ModelTplGenerator;
 
 import java.io.File;
 
 /**
  * 线程安全
  */
-public class ControllerTplGenerator extends DbModelTplGenerator {
+public class ControllerTplGenerator extends ModelTplGenerator {
 
     public ControllerTplGenerator() {
         // 依赖
-        ModelExtendHandler modelExtendHandler = new ServiceExtendHandler();
-        registerHandler(modelExtendHandler);
     }
 
     @Override
@@ -26,14 +20,13 @@ public class ControllerTplGenerator extends DbModelTplGenerator {
 
     @Override
     protected String getOutPath(DbModel dbModel) {
-        //  model
-        MConfig mConfig = dbModel.getmConfig();
-        String pkgDir = mConfig.getOutPath();
+        ModelConfig modelConfig = dbModel.getModelConfig();
+        String pkgDir = modelConfig.getOutPath();
 
-        pkgDir += File.separator + mConfig.getPackageName().replace(".", File.separator);
-        String module = mConfig.getModuleName();
+        pkgDir += File.separator + modelConfig.getPackageName().replace(".", File.separator);
+        String module = modelConfig.getModuleName();
         if (module != null) {
-            pkgDir += File.separator + mConfig.getModuleName();
+            pkgDir += File.separator + modelConfig.getModuleName();
         }
         new File(pkgDir).mkdirs();
         String filepath = pkgDir + File.separator + dbModel.getModel().getClassName() + ".java";
