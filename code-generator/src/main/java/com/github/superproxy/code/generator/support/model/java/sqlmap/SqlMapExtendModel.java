@@ -1,6 +1,6 @@
 package com.github.superproxy.code.generator.support.model.java.sqlmap;
 
-public interface SqlExtendModel {
+public interface SqlMapExtendModel {
     String ID = "sqlMap";
     String NAME = "name";
     String INSERT = "insert";

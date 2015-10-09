@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * 扩展模型处理
  */
-public interface ModelExtendHandler {
+public interface ModelMapExtendHandler {
     /**
      * 扩展ID
      *
@@ -20,5 +20,5 @@ public interface ModelExtendHandler {
      * @param model
      * @param extend
      */
-    void extendModel(Model model, Map extend);
+    void extendModelMap(Model model, Map extend);
 }

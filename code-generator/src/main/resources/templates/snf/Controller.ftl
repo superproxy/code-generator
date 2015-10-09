@@ -1,10 +1,5 @@
-<#assign columns = model.fieldList?sort/>
-<#assign pks = model.pkFieldList?sort/>
-<#assign service = model.extra.service/>
-<#assign name = service.name/>
-<#assign className = model.className/>
-<#assign shortClassName = model.shortClassName/>
-<#assign package = model.package/>
+<#assign columns = fieldList?sort/>
+<#assign pks = pkFieldList?sort/>
 package ${package};
 
 import com.suning.dal.dao.BaseDao;

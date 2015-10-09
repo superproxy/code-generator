@@ -1,7 +1,7 @@
 package com.github.superproxy.code.generator.core.bean.convert;
 
 import com.github.superproxy.code.generator.support.model.DbJavaModel;
-import com.github.superproxy.code.generator.config.ModelConfig;
+import com.github.superproxy.code.generator.support.model.DbJavaModelConfig;
 import com.github.superproxy.code.generator.source.db.ColumnInfo;
 import com.github.superproxy.code.generator.source.db.TableInfo;
 import com.github.superproxy.code.generator.support.model.java.lang.Field;
@@ -15,10 +15,9 @@ import java.util.List;
 
 public class DbModelConvert {
 
-    public static DbJavaModel convert(TableInfo tableInfo, ModelConfig modelConfig, JavaFieldConvertStrategy javaFieldConvertStrategy,
+    public static DbJavaModel convert(TableInfo tableInfo, DbJavaModelConfig dbJavaModelConfig, JavaFieldConvertStrategy javaFieldConvertStrategy,
                                 JavaBeanConvertStrategy javaBeanConvertStrategy) {
         DbJavaModel dbJavaModel = new DbJavaModel();
-//        model.setJjavaBeanConvertStrategy, modelConfig)
         try {
 
             // 基础表信息

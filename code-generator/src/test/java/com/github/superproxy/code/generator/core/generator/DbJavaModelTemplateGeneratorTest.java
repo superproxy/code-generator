@@ -22,14 +22,14 @@ public class DbJavaModelTemplateGeneratorTest {
         cfg.setModel(new DbJavaModel());
 
         ModelHandlerManager modelHandlerManager = new ModelHandlerManager();
-        modelHandlerManager.registerHandler(new ModelExtendHandler() {
+        modelHandlerManager.registerHandler(new ModelMapExtendHandler() {
             @Override
             public String handlerId() {
                 return "test";
             }
 
             @Override
-            public void extendModel(Model model, Map extend) {
+            public void extendModelMap(Model model, Map extend) {
                 extend.put("test", "test");
                 extend.put("extend", "extend");
 

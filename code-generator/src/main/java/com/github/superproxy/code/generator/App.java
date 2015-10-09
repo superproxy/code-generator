@@ -1,6 +1,5 @@
 package com.github.superproxy.code.generator;
 
-import com.github.superproxy.code.generator.core.generator.projectgen.ProjectGenerator;
 import com.github.superproxy.code.generator.config.ProjectConfig;
 import com.github.superproxy.code.generator.config.ProjectUtil;
 

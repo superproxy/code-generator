@@ -6,6 +6,7 @@ import com.github.superproxy.code.generator.core.generator.tplgen.AbstractTempla
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 基于模型扩展的模型生成器
@@ -26,7 +27,7 @@ public class ModelTemplateGenerator extends AbstractTemplateGenerator {
     }
 
 
-    public void registerHandler(ModelExtendHandler handler) {
+    public void registerHandler(ModelMapExtendHandler handler) {
         modelHandlerManager.registerHandler(handler);
     }
 
@@ -68,6 +69,12 @@ public class ModelTemplateGenerator extends AbstractTemplateGenerator {
         Map root = new HashMap();
         root.putAll(baseMap);
         root.putAll(extendMap);
+
+        Set<Map.Entry<Object, Object>> set = root.entrySet();
+        for (Map.Entry<Object, Object> entry : set) {
+            System.out.println("key:" + entry.getKey() + "  value:" + entry.getValue());
+        }
+
         return root;
     }
 

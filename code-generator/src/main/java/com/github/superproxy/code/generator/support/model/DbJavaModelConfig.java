@@ -1,11 +1,11 @@
-package com.github.superproxy.code.generator.config;
+package com.github.superproxy.code.generator.support.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * projectconfig和moduleConfig的合集 内部模型对应的配置
  */
-public class ModelConfig {
+public class DbJavaModelConfig {
     private String author;
     private String packageName;
     private String date;

@@ -1,4 +1,4 @@
-package com.github.superproxy.code.generator.core.tpl;
+package com.github.superproxy.code.generator.tpl;
 
 import java.util.ArrayList;
 import java.util.List;

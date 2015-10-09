@@ -1,5 +1,6 @@
 package com.github.superproxy.code.generator.config;
 
+import com.github.superproxy.code.generator.tpl.Tpl;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
@@ -18,41 +19,36 @@ public class ModulePartConfig implements Serializable {
         this.moduleConfig = moduleConfig;
     }
 
-    private String generator;
     private String packageName;
     private String classPostfix;
-    private String tlpPath;
+    private String tplPath;
 
-    public String getTlpPath() {
-        return tlpPath;
+    public String getTplOutPath() {
+        return tplOutPath;
     }
 
-    public void setTlpPath(String tlpPath) {
-        this.tlpPath = tlpPath;
+    public void setTplOutPath(String tplOutPath) {
+        this.tplOutPath = tplOutPath;
+    }
+
+    private String tplOutPath;
+
+    public String getTplPath() {
+        return tplPath;
+    }
+
+    public void setTplPath(String tplPath) {
+        this.tplPath = tplPath;
     }
 
     public ModulePartConfig() {
     }
 
-    public ModulePartConfig(String generator, String packageName, String classPostfix) {
+    public ModulePartConfig(Tpl tpl, String packageName, String classPostfix) {
         this.classPostfix = classPostfix;
-        this.generator = generator;
+        this.tplOutPath = tpl.getOutPath();
+        this.tplPath = tpl.getTplPath();
         this.packageName = packageName;
-    }
-
-    public ModulePartConfig(String generator, String packageName, String classPostfix, String tlpPath) {
-        this.classPostfix = classPostfix;
-        this.generator = generator;
-        this.packageName = packageName;
-        this.tlpPath = tlpPath;
-    }
-
-    public String getGenerator() {
-        return generator;
-    }
-
-    public void setGenerator(String generator) {
-        this.generator = generator;
     }
 
     public String getPackageName() {

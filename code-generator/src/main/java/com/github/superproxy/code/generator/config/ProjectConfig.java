@@ -25,6 +25,11 @@ public class ProjectConfig implements Serializable {
      */
     private String outPath;
 
+    /**
+     * 模型类型
+     */
+    private String modelType;
+
     private List<ModuleConfig> modules = new ArrayList<ModuleConfig>();
 
     /**

@@ -1,4 +1,4 @@
-package com.github.superproxy.code.generator.core.tpl;
+package com.github.superproxy.code.generator.tpl;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 

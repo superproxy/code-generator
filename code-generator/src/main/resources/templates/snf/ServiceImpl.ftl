@@ -1,10 +1,5 @@
-<#assign columns = model.fieldList?sort/>
-<#assign pks = model.pkFieldList?sort/>
-<#assign service = model.extra.service/>
-<#assign name = service.name/>
-<#assign className = model.className/>
-<#assign shortClassName = model.shortClassName/>
-<#assign package = model.package/>
+<#assign columns = fieldList?sort/>
+<#assign pks = pkFieldList?sort/>
 /**
 * SUNING APPLIANCE CHAINS.
 * Copyright (c) 2012-2012 All Rights Reserved.

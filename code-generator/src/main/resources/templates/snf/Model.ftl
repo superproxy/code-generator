@@ -1,8 +1,8 @@
 <#ftl encoding="UTF-8">
-<#assign fields = model.fieldList?sort/>
-<#assign pkFields = model.pkFieldList?sort/>
-<#assign className = model.className/>
-<#assign package = model.package/>
+<#--<#assign fields = model.fieldList?sort/>-->
+<#--<#assign pkFields = model.pkFieldList?sort/>-->
+<#--<#assign className = model.className/>-->
+<#--<#assign package = model.package/>-->
 <#--<#assign fieldsize = fields?size/>-->
 <#--<#assign pkSize = pks?size/>-->
 /**
@@ -28,7 +28,7 @@ public class ${className} implements BaseModel {
 /**
 * serial Version UID.
 */
-private static final long serialVersionUID = ${model.serialVersionUID};
+private static final long serialVersionUID = ${serialVersionUID};
 
 <#list pkFields as field>
 /**

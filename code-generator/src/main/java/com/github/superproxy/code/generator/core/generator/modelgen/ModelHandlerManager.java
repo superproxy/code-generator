@@ -9,17 +9,18 @@ import java.util.Map;
  * 模型扩展管理器
  */
 public class ModelHandlerManager {
-    private List<ModelExtendHandler> modelExtendHandlerList = new ArrayList<ModelExtendHandler>();
+    private List<ModelMapExtendHandler> modelMapExtendHandlerList = new ArrayList<ModelMapExtendHandler>();
 
-    public void registerHandler(ModelExtendHandler handler) {
-        modelExtendHandlerList.add(handler);
+    public void registerHandler(ModelMapExtendHandler handler) {
+        modelMapExtendHandlerList.add(handler);
     }
 
     public Map handler(Model model) {
         Map extendMap = new HashMap();
-        for (ModelExtendHandler modelExtendHandler : modelExtendHandlerList) {
-//            model.getExtra().put(modelExtendHandler.handlerId(), extendMap);
-            modelExtendHandler.extendModel(model, extendMap);
+        for (ModelMapExtendHandler modelMapExtendHandler : modelMapExtendHandlerList) {
+//            model.getExtra().put(modelMapExtendHandler
+// .handlerId(), extendMap);
+            modelMapExtendHandler.extendModelMap(model, extendMap);
         }
         return extendMap;
     }

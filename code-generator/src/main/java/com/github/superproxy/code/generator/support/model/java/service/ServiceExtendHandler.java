@@ -3,23 +3,18 @@ package com.github.superproxy.code.generator.support.model.java.service;
 
 import com.github.superproxy.code.generator.core.generator.modelgen.Model;
 import com.github.superproxy.code.generator.support.model.DbJavaModel;
-import com.github.superproxy.code.generator.core.generator.modelgen.ModelExtendHandler;
+import com.github.superproxy.code.generator.core.generator.modelgen.ModelMapExtendHandler;
 
 import java.util.Map;
 
-public class ServiceExtendHandler implements ModelExtendHandler {
+public class ServiceExtendHandler implements ModelMapExtendHandler {
 
     public ServiceExtendHandler() {
     }
 
 
     @Override
-    public void extendModel(Model model, Map extend) {
-        extend.put(ServiceExtendModel.NAME, getSqlMapName((DbJavaModel) model));
-    }
-
-    private String getSqlMapName(DbJavaModel dbJavaModel) {
-        return dbJavaModel.getTableName().replace(dbJavaModel.getModelConfig().getTablePrefix() + "_", "");
+    public void extendModelMap(Model model, Map extend) {
     }
 
     @Override

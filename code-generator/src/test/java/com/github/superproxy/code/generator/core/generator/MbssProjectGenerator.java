@@ -1,29 +1,41 @@
-package com.github.superproxy.code.generator.config;
+package com.github.superproxy.code.generator.core.generator;
 
-//import com.github.superproxy.code.generator.plugins.contoller.ControllerTplGenerator;
-//import com.github.superproxy.code.generator.plugins.dao.DaoImplTplGenerator;
-//import com.github.superproxy.code.generator.plugins.dao.DaoMapperTplGenerator;
-//import com.github.superproxy.code.generator.plugins.dao.DaoTplGenerator;
-//import com.github.superproxy.code.generator.plugins.model.ModelTplGenerator;
-//import com.github.superproxy.code.generator.plugins.service.ServiceImplTplGenerator;
-//import com.github.superproxy.code.generator.plugins.service.ServiceTplGenerator;
-//import com.github.superproxy.code.generator.plugins.sqlmap.SqlMapTplGenerator;
 import com.github.superproxy.code.generator.ProjectGenerator;
+import com.github.superproxy.code.generator.config.*;
+import com.github.superproxy.code.generator.support.model.rules.contoller.ControllerTpl;
+import com.github.superproxy.code.generator.support.model.rules.dao.DaoImplTpl;
+import com.github.superproxy.code.generator.support.model.rules.dao.DaoMapperTpl;
+import com.github.superproxy.code.generator.support.model.rules.dao.DaoTpl;
+import com.github.superproxy.code.generator.support.model.rules.model.ModelTpl;
+import com.github.superproxy.code.generator.support.model.rules.service.ServiceImplTpl;
+import com.github.superproxy.code.generator.support.model.rules.service.ServiceTpl;
+import com.github.superproxy.code.generator.support.model.rules.sqlmap.SqlMapTpl;
+import com.github.superproxy.code.generator.tpl.CommonTpl;
 import org.testng.annotations.Test;
 
 import java.io.File;
 
-public class MbssGenerator {
+public class MbssProjectGenerator {
     boolean useLocalDb = false;
 
+    /**
+     * save config
+     *
+     * @throws Exception
+     */
     @Test
     public void testWrite() throws Exception {
-        ProjectUtil.write(buildProjectCofig(), "src\\test\\resources\\mbss.yml");
+        ProjectUtil.write(buildProjectCofig(), "src/test/resources/mbss.yml");
     }
 
+    /**
+     * read the config from mbss.yml
+     *
+     * @throws Exception
+     */
     @Test(dependsOnMethods = "testWrite")
     public void testGenFromFile() throws Exception {
-        ProjectConfig projectConfig = ProjectUtil.read("src\\test\\resources\\mbss.yml");
+        ProjectConfig projectConfig = ProjectUtil.read("src/test/resources/mbss.yml");
         System.out.println("@@@@@@@@@@@@@@@@@@@" + new File(".").getAbsolutePath());
         new ProjectGenerator().process(projectConfig);
     }
@@ -41,7 +53,7 @@ public class MbssGenerator {
         projectConfig.setAuthor("14120295");
         projectConfig.setDate("2014-12-30");
         projectConfig.setOutPath("d:/env");
-        projectConfig.setTplRoot(new File("src\\main\\resources\\templates\\snf").getAbsolutePath());
+        projectConfig.setTplRoot(new File("src/main/resources/templates/snf").getAbsolutePath());
 
         if (useLocalDb) {
             projectConfig.setDbConfig(buildH2DbConfig());
@@ -94,14 +106,15 @@ public class MbssGenerator {
     }
 
     private void registerPart(ModuleConfig moduleConfig) {
-//        moduleConfig.addModulePartConfig(new ModulePartConfig(ModelTplGenerator.class.getName(), "com.sunning.mbss.model", "Mapper"));
-//        moduleConfig.addModulePartConfig(new ModulePartConfig(SqlMapTplGenerator.class.getName(), "", ""));
-//        moduleConfig.addModulePartConfig(new ModulePartConfig(DaoTplGenerator.class.getName(), "com.sunning.mbss.dao", "Dao", "Dao.ftl"));
-//        moduleConfig.addModulePartConfig(new ModulePartConfig(DaoImplTplGenerator.class.getName(), "com.sunning.mbss.dao.impl", "DaoImpl"));
-//        moduleConfig.addModulePartConfig(new ModulePartConfig(DaoMapperTplGenerator.class.getName(), "com.sunning.mbss.dao", "Mapper"));
-//        moduleConfig.addModulePartConfig(new ModulePartConfig(ServiceTplGenerator.class.getName(), "com.sunning.mbss.inf", "Service"));
-//        moduleConfig.addModulePartConfig(new ModulePartConfig(ServiceImplTplGenerator.class.getName(), "com.sunning.mbss.impl", "ServiceImpl"));
-//        moduleConfig.addModulePartConfig(new ModulePartConfig(ControllerTplGenerator.class.getName(), "com.sunning.mbss.controller", "Controller"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(new ModelTpl(), "com.sunning.mbss.model", "Mapper"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(new CommonTpl("test", "model.ftl", "test.java"), "com.sunning.mbss.model", "Mapper"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(new SqlMapTpl(), "", ""));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(new DaoTpl(), "com.sunning.mbss.dao", "Dao"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(new DaoImplTpl(), "com.sunning.mbss.dao.impl", "DaoImpl"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(new DaoMapperTpl(), "com.sunning.mbss.dao", "Mapper"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(new ServiceTpl(), "com.sunning.mbss.inf", "Service"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(new ServiceImplTpl(), "com.sunning.mbss.impl", "ServiceImpl"));
+        moduleConfig.addModulePartConfig(new ModulePartConfig(new ControllerTpl(), "com.sunning.mbss.controller", "Controller"));
     }
 
 

@@ -1,87 +1,111 @@
---- !com.github.superproxy.code.generator.app.ProjectConfig
+--- !com.github.superproxy.code.generator.config.ProjectConfig
 author: "14120295"
 date: 2014-12-30
-dbConfig: !com.github.superproxy.code.generator.app.DbConfig
+dbConfig: !com.github.superproxy.code.generator.config.DbConfig
   driverClass: com.mysql.jdbc.Driver
   password: sn123456
   url: "jdbc:mysql://10.27.25.97:3306/mbssdb?characterEncoding=utf8"
   userName: root
 modules: 
-  - !com.github.superproxy.code.generator.app.ModuleConfig
+  - !com.github.superproxy.code.generator.config.ModuleConfig
     moduleName: account
     modulePartConfigList: 
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
         classPostfix: Mapper
-        generator: com.github.superproxy.code.generator.plugins.model.ModelTplGenerator
         packageName: com.sunning.mbss.model
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
-        classPostfix: ""
-        generator: com.github.superproxy.code.generator.plugins.sqlmap.SqlMapTplGenerator
-        packageName: ""
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
-        classPostfix: Dao
-        generator: com.github.superproxy.code.generator.plugins.dao.DaoTplGenerator
-        packageName: com.sunning.mbss.dao
-        tlpPath: Dao.ftl
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
-        classPostfix: DaoImpl
-        generator: com.github.superproxy.code.generator.plugins.dao.DaoImplTplGenerator
-        packageName: com.sunning.mbss.dao.impl
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        tplOutPath: model.java
+        tplPath: Model.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
         classPostfix: Mapper
-        generator: com.github.superproxy.code.generator.plugins.dao.DaoMapperTplGenerator
+        packageName: com.sunning.mbss.model
+        tplOutPath: test.java
+        tplPath: model.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
+        classPostfix: ""
+        packageName: ""
+        tplOutPath: SqlMap.java
+        tplPath: SqlMap.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
+        classPostfix: Dao
         packageName: com.sunning.mbss.dao
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        tplOutPath: dao.java
+        tplPath: Dao.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
+        classPostfix: DaoImpl
+        packageName: com.sunning.mbss.dao.impl
+        tplOutPath: daoImpl.java
+        tplPath: DaoImpl.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
+        classPostfix: Mapper
+        packageName: com.sunning.mbss.dao
+        tplOutPath: daoMapper.sql
+        tplPath: DaoMapper.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
         classPostfix: Service
-        generator: com.github.superproxy.code.generator.plugins.service.ServiceTplGenerator
         packageName: com.sunning.mbss.inf
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        tplOutPath: service.ftl
+        tplPath: Service.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
         classPostfix: ServiceImpl
-        generator: com.github.superproxy.code.generator.plugins.service.ServiceImplTplGenerator
         packageName: com.sunning.mbss.impl
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        tplOutPath: serviceImpl.java
+        tplPath: ServiceImpl.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
         classPostfix: Controller
-        generator: com.github.superproxy.code.generator.plugins.contoller.ControllerTplGenerator
         packageName: com.sunning.mbss.controller
+        tplOutPath: controller.java
+        tplPath: Controller.ftl
     tableName: mbss_account
     tablePrefix: mbss
-  - !com.github.superproxy.code.generator.app.ModuleConfig
+  - !com.github.superproxy.code.generator.config.ModuleConfig
     moduleName: video
     modulePartConfigList: 
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
         classPostfix: Mapper
-        generator: com.github.superproxy.code.generator.plugins.model.ModelTplGenerator
         packageName: com.sunning.mbss.model
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
-        classPostfix: ""
-        generator: com.github.superproxy.code.generator.plugins.sqlmap.SqlMapTplGenerator
-        packageName: ""
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
-        classPostfix: Dao
-        generator: com.github.superproxy.code.generator.plugins.dao.DaoTplGenerator
-        packageName: com.sunning.mbss.dao
-        tlpPath: Dao.ftl
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
-        classPostfix: DaoImpl
-        generator: com.github.superproxy.code.generator.plugins.dao.DaoImplTplGenerator
-        packageName: com.sunning.mbss.dao.impl
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        tplOutPath: model.java
+        tplPath: Model.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
         classPostfix: Mapper
-        generator: com.github.superproxy.code.generator.plugins.dao.DaoMapperTplGenerator
+        packageName: com.sunning.mbss.model
+        tplOutPath: test.java
+        tplPath: model.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
+        classPostfix: ""
+        packageName: ""
+        tplOutPath: SqlMap.java
+        tplPath: SqlMap.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
+        classPostfix: Dao
         packageName: com.sunning.mbss.dao
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        tplOutPath: dao.java
+        tplPath: Dao.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
+        classPostfix: DaoImpl
+        packageName: com.sunning.mbss.dao.impl
+        tplOutPath: daoImpl.java
+        tplPath: DaoImpl.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
+        classPostfix: Mapper
+        packageName: com.sunning.mbss.dao
+        tplOutPath: daoMapper.sql
+        tplPath: DaoMapper.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
         classPostfix: Service
-        generator: com.github.superproxy.code.generator.plugins.service.ServiceTplGenerator
         packageName: com.sunning.mbss.inf
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        tplOutPath: service.ftl
+        tplPath: Service.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
         classPostfix: ServiceImpl
-        generator: com.github.superproxy.code.generator.plugins.service.ServiceImplTplGenerator
         packageName: com.sunning.mbss.impl
-      - !com.github.superproxy.code.generator.app.ModulePartConfig
+        tplOutPath: serviceImpl.java
+        tplPath: ServiceImpl.ftl
+      - !com.github.superproxy.code.generator.config.ModulePartConfig
         classPostfix: Controller
-        generator: com.github.superproxy.code.generator.plugins.contoller.ControllerTplGenerator
         packageName: com.sunning.mbss.controller
+        tplOutPath: controller.java
+        tplPath: Controller.ftl
     tableName: mbss_video
     tablePrefix: mbss
 outPath: "d:/env"
-tplsRoot: "E:\\projects\\code-generator\\code-generator\\src\\main\\resources\\templates\\snf"
+tplRoot: "E:\\projects\\code-generator\\code-generator\\src\\main\\resources\\templates\\snf"
