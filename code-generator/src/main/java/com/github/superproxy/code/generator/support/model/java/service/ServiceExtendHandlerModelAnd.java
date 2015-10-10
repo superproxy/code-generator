@@ -2,14 +2,14 @@ package com.github.superproxy.code.generator.support.model.java.service;
 
 
 import com.github.superproxy.code.generator.core.generator.modelgen.Model;
-import com.github.superproxy.code.generator.support.model.DbJavaModel;
+import com.github.superproxy.code.generator.core.generator.modelgen.ModelAndModelMapExtendHandler;
 import com.github.superproxy.code.generator.core.generator.modelgen.ModelMapExtendHandler;
 
 import java.util.Map;
 
-public class ServiceExtendHandler implements ModelMapExtendHandler {
+public class ServiceExtendHandlerModelAnd implements ModelMapExtendHandler {
 
-    public ServiceExtendHandler() {
+    public ServiceExtendHandlerModelAnd() {
     }
 
 

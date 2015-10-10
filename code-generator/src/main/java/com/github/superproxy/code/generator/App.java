@@ -11,7 +11,7 @@ public class App {
 
     private void gen(String path) throws Exception {
         ProjectConfig projectConfig = ProjectUtil.read(path);
-        ProjectGenerator.process(projectConfig);
+        new ProjectGenerator(){}.process(projectConfig);
     }
 
 }

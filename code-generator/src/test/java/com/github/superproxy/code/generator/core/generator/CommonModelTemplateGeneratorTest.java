@@ -2,14 +2,14 @@ package com.github.superproxy.code.generator.core.generator;
 
 import com.github.superproxy.code.generator.core.generator.engine.freemarker.FreeMarkerTplEngine;
 import com.github.superproxy.code.generator.core.generator.modelgen.*;
-import com.github.superproxy.code.generator.support.model.DbJavaModel;
-import com.github.superproxy.code.generator.support.model.java.service.ServiceExtendHandler;
+import com.github.superproxy.code.generator.support.model.CommonModel;
+import com.github.superproxy.code.generator.support.model.java.service.ServiceExtendHandlerModelAnd;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.util.Map;
 
-public class DbJavaModelTemplateGeneratorTest {
+public class CommonModelTemplateGeneratorTest {
     @Test
     public void testGenerator() throws Exception {
 
@@ -19,10 +19,10 @@ public class DbJavaModelTemplateGeneratorTest {
         cfg.setOutPath("d:/env/test-model.java");
         cfg.setTplsRoot(new File("src/test/resources").getAbsolutePath());
         cfg.setTplPath("test-model.ftl");
-        cfg.setModel(new DbJavaModel());
+        cfg.setModel(new CommonModel());
 
-        ModelHandlerManager modelHandlerManager = new ModelHandlerManager();
-        modelHandlerManager.registerHandler(new ModelMapExtendHandler() {
+        ModelAndModelMapHandlerManager modelAndModelMapHandlerManager = new ModelAndModelMapHandlerManager();
+        modelAndModelMapHandlerManager.registerModelMapHandler(new ModelAndModelMapExtendHandler() {
             @Override
             public String handlerId() {
                 return "test";
@@ -34,10 +34,15 @@ public class DbJavaModelTemplateGeneratorTest {
                 extend.put("extend", "extend");
 
             }
+
+            @Override
+            public void extendModel(Model model) {
+
+            }
         });
 
-        modelHandlerManager.registerHandler(new ServiceExtendHandler());
-        generator.setModelHandlerManager(modelHandlerManager);
+        modelAndModelMapHandlerManager.registerModelMapHandler(new ServiceExtendHandlerModelAnd());
+        generator.setModelAndModelMapHandlerManager(modelAndModelMapHandlerManager);
         generator.generator(cfg);
 
     }

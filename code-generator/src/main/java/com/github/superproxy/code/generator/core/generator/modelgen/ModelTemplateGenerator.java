@@ -4,36 +4,15 @@ import com.github.superproxy.code.generator.core.generator.engine.CommonTplModel
 import com.github.superproxy.code.generator.core.generator.engine.TplConfig;
 import com.github.superproxy.code.generator.core.generator.tplgen.AbstractTemplateGenerator;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 基于模型扩展的模型生成器
  */
 public class ModelTemplateGenerator extends AbstractTemplateGenerator {
-    protected ModelHandlerManager modelHandlerManager = new ModelHandlerManager();
-
-    public ModelHandlerManager getModelHandlerManager() {
-        return modelHandlerManager;
-    }
-
-    public void setModelHandlerManager(ModelHandlerManager modelHandlerManager) {
-        this.modelHandlerManager = modelHandlerManager;
-    }
-
-    protected Map getExtendMap(Model dbJavaModel) {
-        return modelHandlerManager.handler(dbJavaModel);
-    }
-
-
-    public void registerHandler(ModelMapExtendHandler handler) {
-        modelHandlerManager.registerHandler(handler);
-    }
-
+    private ModelAndModelMapHandlerManager modelAndModelMapHandlerManager;
 
     public ModelTemplateGenerator() {
-
     }
 
     @Override
@@ -44,38 +23,19 @@ public class ModelTemplateGenerator extends AbstractTemplateGenerator {
         }
     }
 
-    public void generator(ModelGeneratorConfig modelGeneratorContext) {
+
+    public void generator(ModelGeneratorConfig modelGeneratorConfig) {
         CommonTplModel tplModel = new CommonTplModel();
-        tplModel.setOutPath(modelGeneratorContext.getOutPath());
-        tplModel.setTplPath(modelGeneratorContext.getTplPath());
-        tplModel.setTplsRoot(modelGeneratorContext.getTplsRoot());
-        Map map = getMap(modelGeneratorContext.getModel());
+        Map map = modelAndModelMapHandlerManager.extendMap(modelGeneratorConfig.getModel());
         tplModel.setModelMap(map);
+        tplModel.setOutPath(modelGeneratorConfig.getOutPath());
+        tplModel.setTplPath(modelGeneratorConfig.getTplPath());
+        tplModel.setTplsRoot(modelGeneratorConfig.getTplsRoot());
+
         TplConfig tplConfig = new TplConfig();
         tplConfig.setTplModel(tplModel);
-        tplConfig.setTemplateEngine(modelGeneratorContext.getTemplateEngine());
+        tplConfig.setTemplateEngine(modelGeneratorConfig.getTemplateEngine());
         super.generator(tplConfig);
-    }
-
-    private Map getBaseMap(Model dbJavaModel) {
-        Map root = new HashMap();
-        root.put("model", dbJavaModel);
-        return root;
-    }
-
-    protected Map getMap(Model dbJavaModel) {
-        Map baseMap = getBaseMap(dbJavaModel);
-        Map extendMap = getExtendMap(dbJavaModel);
-        Map root = new HashMap();
-        root.putAll(baseMap);
-        root.putAll(extendMap);
-
-        Set<Map.Entry<Object, Object>> set = root.entrySet();
-        for (Map.Entry<Object, Object> entry : set) {
-            System.out.println("key:" + entry.getKey() + "  value:" + entry.getValue());
-        }
-
-        return root;
     }
 
 
@@ -87,5 +47,9 @@ public class ModelTemplateGenerator extends AbstractTemplateGenerator {
     @Override
     public String getDesciprtion() {
         return "模型生成器";
+    }
+
+    public void setModelAndModelMapHandlerManager(ModelAndModelMapHandlerManager modelAndModelMapHandlerManager) {
+        this.modelAndModelMapHandlerManager = modelAndModelMapHandlerManager;
     }
 }

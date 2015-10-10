@@ -1,12 +1,15 @@
 package com.github.superproxy.code.generator.support.model.rules.service;
 
+import com.github.superproxy.code.generator.core.generator.modelgen.Model;
+import com.github.superproxy.code.generator.support.model.CommonModel;
+import com.github.superproxy.code.generator.support.model.DbJavaModelConfig;
 import com.github.superproxy.code.generator.tpl.Tpl;
+
+import java.io.File;
 
 public class ServiceImplTpl implements Tpl {
 
     public ServiceImplTpl() {
-//        ModelExtendHandler modelExtendHandler = new ServiceExtendHandler();
-//        registerHandler(modelExtendHandler);
     }
 
     @Override
@@ -15,19 +18,19 @@ public class ServiceImplTpl implements Tpl {
     }
 
     @Override
-    public String getOutPath() {
-//        ModelConfig modelConfig = dbModel.getModelConfig();
-//        String pkgDir = modelConfig.getOutPath();
-//
-//        pkgDir += File.separator + modelConfig.getPackageName().replace(".", File.separator);
-//        String module = modelConfig.getModuleName();
-//        if (module != null) {
-//            pkgDir += File.separator + modelConfig.getModuleName();
-//        }
-//        new File(pkgDir).mkdirs();
-//        String filepath = pkgDir + File.separator +  dbModel.getModel().getClassName() + ".java";
-//        return filepath;
-        return "serviceImpl.java";
+    public String getOutPath(Model model) {
+        CommonModel commonModel = (CommonModel) model;
+        DbJavaModelConfig modelConfig = commonModel.getDbJavaModelConfig();
+        String pkgDir = modelConfig.getOutPath();
+
+        pkgDir += File.separator + modelConfig.getPackageName().replace(".", File.separator);
+        String module = modelConfig.getModuleName();
+        if (module != null) {
+            pkgDir += File.separator + modelConfig.getModuleName();
+        }
+        new File(pkgDir).mkdirs();
+        String filepath = pkgDir + File.separator + commonModel.getJavaBean().getClassName() + ".java";
+        return filepath;
     }
 
     @Override

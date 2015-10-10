@@ -1,5 +1,7 @@
 package com.github.superproxy.code.generator.tpl;
 
+import com.github.superproxy.code.generator.core.generator.modelgen.Model;
+
 public class CommonTpl implements Tpl {
 
     String tplPath;
@@ -9,7 +11,7 @@ public class CommonTpl implements Tpl {
     public CommonTpl() {
     }
 
-    public CommonTpl(String id,  String tplPath,String outPath) {
+    public CommonTpl(String id, String tplPath, String outPath) {
         this.id = id;
         this.outPath = outPath;
         this.tplPath = tplPath;
@@ -33,8 +35,8 @@ public class CommonTpl implements Tpl {
     }
 
     @Override
-    public String getOutPath() {
-        return outPath;
+    public String getOutPath(Model model) {
+        return tplPath;
     }
 
     @Override

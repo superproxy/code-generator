@@ -4,11 +4,11 @@ import com.github.superproxy.code.generator.core.bean.support.db2java.TypeMapper
 import com.github.superproxy.code.generator.source.db.ColumnInfo;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Field extends ColumnInfo implements JavaField {
+public class CommonField extends ColumnInfo implements JavaField {
     private JavaFieldConvertStrategy javaNameStrategy;
 
 
-    public Field(JavaFieldConvertStrategy javaNameStrategy) {
+    public CommonField(JavaFieldConvertStrategy javaNameStrategy) {
         this.javaNameStrategy = javaNameStrategy;
     }
 

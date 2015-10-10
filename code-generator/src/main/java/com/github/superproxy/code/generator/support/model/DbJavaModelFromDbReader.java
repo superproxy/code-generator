@@ -31,15 +31,18 @@ public class DbJavaModelFromDbReader implements DbJavaModelReader {
         return dbSchemaFactory;
     }
 
-    private DbJavaModel coverModelFromDb(DbJavaModelConfig dbJavaModelConfig, ProjectConfig projectConfig, ModuleConfig moduleConfig, ModulePartConfig modulePartConfig) throws Exception {
+    private CommonModel coverModelFromDb(TableInfo tableInfo, DbJavaModelConfig dbJavaModelConfig, ProjectConfig projectConfig, ModuleConfig moduleConfig, ModulePartConfig modulePartConfig) throws Exception {
+        CommonModel commonModel = DbModelConvert.convert(tableInfo, dbJavaModelConfig, new JavaFieldStrategyImpl(), new JavaBeanConvertStrategyImpl());
+        commonModel.setDbJavaModelConfig(dbJavaModelConfig);
+        commonModel.setTableInfo(tableInfo);
+        return commonModel;
+    }
+
+    private TableInfo getTableInfo(ProjectConfig projectConfig, ModuleConfig moduleConfig) throws Exception {
         DataSource dataSource = getDataSource2(projectConfig.getDbConfig());
         DbSchemaFactory dbSchemaFactory = buildDbSchemaFactory(dataSource, projectConfig.getDbConfig());
         DbSchema dbSchema = dbSchemaFactory.genDbSchema(new String[]{moduleConfig.getTableName()});
-        TableInfo tableInfo = dbSchema.getTableInfoList().get(0);
-        DbJavaModel dbJavaModel = DbModelConvert.convert(tableInfo, dbJavaModelConfig, new JavaFieldStrategyImpl(), new JavaBeanConvertStrategyImpl());
-        dbJavaModel.setDbJavaModelConfig(dbJavaModelConfig
-        );
-        return dbJavaModel;
+        return dbSchema.getTableInfoList().get(0);
     }
 
     private DataSource getDataSource2(DbConfig dbConfig) throws Exception {
@@ -53,9 +56,11 @@ public class DbJavaModelFromDbReader implements DbJavaModelReader {
 
 
     @Override
-    public DbJavaModel reader(DbJavaModelConfig dbJavaModelConfig, ProjectConfig projectConfig, ModuleConfig moduleConfig, ModulePartConfig modulePartConfig) {
+    public CommonModel reader(DbJavaModelConfig dbJavaModelConfig, ProjectConfig projectConfig, ModuleConfig moduleConfig, ModulePartConfig modulePartConfig) {
         try {
-            return coverModelFromDb(dbJavaModelConfig, projectConfig, moduleConfig, modulePartConfig);
+            TableInfo tableInfo = getTableInfo(projectConfig, moduleConfig);
+
+            return coverModelFromDb(tableInfo, dbJavaModelConfig, projectConfig, moduleConfig, modulePartConfig);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

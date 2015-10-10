@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 模块的配置信息
+ * 模块的配置信息  数据库 包   路径
  */
 public class ModuleConfig implements Serializable {
     private ProjectConfig projectConfig;
@@ -20,9 +20,11 @@ public class ModuleConfig implements Serializable {
         this.projectConfig = projectConfig;
     }
 
-    private String tablePrefix;
+
     private String moduleName;
+
     private String tableName;
+    private String tablePrefix;
 
     private List<ModulePartConfig> modulePartConfigList = new ArrayList<ModulePartConfig>();
 

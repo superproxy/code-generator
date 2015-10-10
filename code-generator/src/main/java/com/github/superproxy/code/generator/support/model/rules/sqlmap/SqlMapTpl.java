@@ -1,9 +1,13 @@
 package com.github.superproxy.code.generator.support.model.rules.sqlmap;
 
+import com.github.superproxy.code.generator.core.generator.modelgen.Model;
+import com.github.superproxy.code.generator.support.model.CommonModel;
+import com.github.superproxy.code.generator.support.model.DbJavaModelConfig;
 import com.github.superproxy.code.generator.tpl.Tpl;
 
-public class SqlMapTpl implements Tpl {
+import java.io.File;
 
+public class SqlMapTpl implements Tpl {
 
     public SqlMapTpl() {
     }
@@ -15,21 +19,20 @@ public class SqlMapTpl implements Tpl {
 
 
     @Override
-    public String getOutPath() {
-//        ModelConfig modelConfig = dbModel.getModelConfig();
-//        String pkgDir = modelConfig.getOutPath();
-//        String module = modelConfig.getModuleName();
-//        if (module != null) {
-//            pkgDir += File.separator + modelConfig.getModuleName();
-//        }
-//
-////        pkgDir += File.separator + projectConfig.getPackageName().replace(".", File.separator);
-//
-//        new File(pkgDir).mkdirs();
-//        return pkgDir + File.separator + "sqlMap_" +
-//                dbModel.getModel().getShortClassName().substring(0, 1).toLowerCase() +
-//                dbModel.getModel().getShortClassName().substring(1) + ".xml";
-        return "SqlMap.java";
+    public String getOutPath(Model model) {
+        CommonModel commonModel = (CommonModel) model;
+        DbJavaModelConfig modelConfig = commonModel.getDbJavaModelConfig();
+        String pkgDir = modelConfig.getOutPath();
+        String module = modelConfig.getModuleName();
+        if (module != null) {
+            pkgDir += File.separator + modelConfig.getModuleName();
+        }
+
+//        pkgDir += File.separator + projectConfig.getPackageName().replace(".", File.separator);
+        new File(pkgDir).mkdirs();
+        return pkgDir + File.separator + "sqlMap_" +
+                commonModel.getJavaBean().getShortClassName().substring(0, 1).toLowerCase() +
+                commonModel.getJavaBean().getShortClassName().substring(1) + ".xml";
     }
 
     @Override

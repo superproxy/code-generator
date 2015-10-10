@@ -1,21 +1,20 @@
 package com.github.superproxy.code.generator.support.model.java.sqlmap;
 
-import com.github.superproxy.code.generator.core.generator.modelgen.ModelMapExtendHandler;
-import com.github.superproxy.code.generator.support.model.DbJavaModel;
+import com.github.superproxy.code.generator.support.model.CommonModel;
 
 public interface SqlMapMethod{
 
-    String getInsertGenerator(DbJavaModel dbJavaModel);
+    String getInsertGenerator(CommonModel commonModel);
 
-    String getInsert2Generator(DbJavaModel dbJavaModel);
+    String getInsert2Generator(CommonModel commonModel);
 
-    String updateGenerator(DbJavaModel dbJavaModel);
+    String updateGenerator(CommonModel commonModel);
 
-    String queryByIdGenerator(DbJavaModel dbJavaModel);
+    String queryByIdGenerator(CommonModel commonModel);
 
-    String queryCountGenerator(DbJavaModel dbJavaModel);
+    String queryCountGenerator(CommonModel commonModel);
 
-    String queryByPageGenerator(DbJavaModel dbJavaModel);
+    String queryByPageGenerator(CommonModel commonModel);
 
-    String deleteByIdGenerator(DbJavaModel dbJavaModel);
+    String deleteByIdGenerator(CommonModel commonModel);
 }

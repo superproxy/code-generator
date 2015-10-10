@@ -1,15 +1,48 @@
 package com.github.superproxy.code.generator.config;
 
+import com.github.superproxy.code.generator.support.model.CommonModel;
 import com.github.superproxy.code.generator.tpl.Tpl;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 
 /**
  * 模块的配置信息
  */
 public class ModulePartConfig implements Serializable {
+
+
+    private String tplClass;
     private ModuleConfig moduleConfig;
+
+    private String packageName;
+    private String classPostfix;
+    private String tplPath;
+    private String tplOutPath;
+
+    public ModulePartConfig() {
+    }
+
+    public ModulePartConfig(Tpl tpl, String packageName, String classPostfix) {
+        this.classPostfix = classPostfix;
+        this.tplPath = tpl.getTplPath();
+        this.tplClass = tpl.getClass().getName();
+        this.packageName = packageName;
+    }
+
+    public String getTplOutPath(CommonModel commonModel) {
+        try {
+            Constructor<?> constructor = Class.forName(tplClass).getConstructor();
+            Tpl tpl = (Tpl) constructor.newInstance();
+            tplOutPath = tpl.getOutPath(commonModel);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return tplOutPath;
+    }
+
 
     public ModuleConfig getModuleConfig() {
         return moduleConfig;
@@ -19,19 +52,22 @@ public class ModulePartConfig implements Serializable {
         this.moduleConfig = moduleConfig;
     }
 
-    private String packageName;
-    private String classPostfix;
-    private String tplPath;
-
-    public String getTplOutPath() {
-        return tplOutPath;
-    }
-
     public void setTplOutPath(String tplOutPath) {
         this.tplOutPath = tplOutPath;
     }
 
-    private String tplOutPath;
+
+    public String getTplClass() {
+        return tplClass;
+    }
+
+    public void setTplClass(String tplClass) {
+        this.tplClass = tplClass;
+    }
+
+    public String getTplOutPath() {
+        return tplOutPath;
+    }
 
     public String getTplPath() {
         return tplPath;
@@ -41,15 +77,6 @@ public class ModulePartConfig implements Serializable {
         this.tplPath = tplPath;
     }
 
-    public ModulePartConfig() {
-    }
-
-    public ModulePartConfig(Tpl tpl, String packageName, String classPostfix) {
-        this.classPostfix = classPostfix;
-        this.tplOutPath = tpl.getOutPath();
-        this.tplPath = tpl.getTplPath();
-        this.packageName = packageName;
-    }
 
     public String getPackageName() {
         return packageName;

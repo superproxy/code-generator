@@ -1,10 +1,10 @@
 package com.github.superproxy.code.generator.core.bean.convert;
 
-import com.github.superproxy.code.generator.support.model.DbJavaModel;
+import com.github.superproxy.code.generator.support.model.CommonModel;
 import com.github.superproxy.code.generator.support.model.DbJavaModelConfig;
 import com.github.superproxy.code.generator.source.db.ColumnInfo;
 import com.github.superproxy.code.generator.source.db.TableInfo;
-import com.github.superproxy.code.generator.support.model.java.lang.Field;
+import com.github.superproxy.code.generator.support.model.java.lang.CommonField;
 import com.github.superproxy.code.generator.support.model.java.lang.JavaBeanConvertStrategy;
 import com.github.superproxy.code.generator.support.model.java.lang.JavaFieldConvertStrategy;
 import org.apache.commons.beanutils.BeanUtils;
@@ -15,43 +15,43 @@ import java.util.List;
 
 public class DbModelConvert {
 
-    public static DbJavaModel convert(TableInfo tableInfo, DbJavaModelConfig dbJavaModelConfig, JavaFieldConvertStrategy javaFieldConvertStrategy,
+    public static CommonModel convert(TableInfo tableInfo, DbJavaModelConfig dbJavaModelConfig, JavaFieldConvertStrategy javaFieldConvertStrategy,
                                 JavaBeanConvertStrategy javaBeanConvertStrategy) {
-        DbJavaModel dbJavaModel = new DbJavaModel();
+        CommonModel commonModel = new CommonModel();
         try {
 
             // 基础表信息
-            BeanUtils.copyProperties(dbJavaModel, tableInfo);
+            BeanUtils.copyProperties(commonModel, tableInfo);
 
             // 主键
-            dbJavaModel.setPkColumnList(tableInfo.getPkColumnList());
-            List<Field> pkFieldList = new ArrayList<Field>();
-            for (ColumnInfo c : dbJavaModel.getPkColumnList()) {
+            commonModel.setPkColumnList(tableInfo.getPkColumnList());
+            List<CommonField> pkFieldList = new ArrayList<CommonField>();
+            for (ColumnInfo c : commonModel.getPkColumnList()) {
 
-                Field field = new Field(javaFieldConvertStrategy);
+                CommonField field = new CommonField(javaFieldConvertStrategy);
                 BeanUtils.copyProperties(field, c);
                 pkFieldList.add(field);
             }
-            dbJavaModel.setPkFieldList(pkFieldList);
+            commonModel.setPkFieldList(pkFieldList);
 
 
             //  非主键
-            dbJavaModel.setColumnInfoList(tableInfo.getColumnInfoList());
-            List<Field> fieldList = new ArrayList<Field>();
-            for (ColumnInfo c : dbJavaModel.getColumnInfoList()) {
+            commonModel.setColumnInfoList(tableInfo.getColumnInfoList());
+            List<CommonField> fieldList = new ArrayList<CommonField>();
+            for (ColumnInfo c : commonModel.getColumnInfoList()) {
 
-                Field field = new Field(javaFieldConvertStrategy);
+                CommonField field = new CommonField(javaFieldConvertStrategy);
                 BeanUtils.copyProperties(field, c);
                 fieldList.add(field);
             }
-            dbJavaModel.setFieldList(fieldList);
+            commonModel.setFieldList(fieldList);
 
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-        return dbJavaModel;
+        return commonModel;
     }
 
 }

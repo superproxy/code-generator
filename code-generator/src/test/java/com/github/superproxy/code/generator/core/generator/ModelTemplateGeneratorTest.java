@@ -20,8 +20,8 @@ public class ModelTemplateGeneratorTest {
         cfg.setModel(new Model() {
         });
 
-        ModelHandlerManager modelHandlerManager = new ModelHandlerManager();
-        modelHandlerManager.registerHandler(new ModelMapExtendHandler() {
+        ModelAndModelMapHandlerManager modelAndModelMapHandlerManager = new ModelAndModelMapHandlerManager();
+        modelAndModelMapHandlerManager.registerModelMapHandler(new ModelAndModelMapExtendHandler() {
             @Override
             public String handlerId() {
                 return "test";
@@ -32,9 +32,14 @@ public class ModelTemplateGeneratorTest {
                 extend.put("test", "test");
                 extend.put("extend", "extend");
             }
+
+            @Override
+            public void extendModel(Model model) {
+
+            }
         });
 
-        generator.setModelHandlerManager(modelHandlerManager);
+        generator.setModelAndModelMapHandlerManager(modelAndModelMapHandlerManager);
         generator.generator(cfg);
 
     }

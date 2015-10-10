@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 
-public class MbssProjectGenerator {
+public class MbssProjectGenerator extends ProjectGenerator {
     boolean useLocalDb = false;
 
     /**
@@ -25,7 +25,7 @@ public class MbssProjectGenerator {
      */
     @Test
     public void testWrite() throws Exception {
-        ProjectUtil.write(buildProjectCofig(), "src/test/resources/mbss.yml");
+        ProjectUtil.write(buildProjectConfig(), "src/test/resources/mbss.yml");
     }
 
     /**
@@ -37,18 +37,19 @@ public class MbssProjectGenerator {
     public void testGenFromFile() throws Exception {
         ProjectConfig projectConfig = ProjectUtil.read("src/test/resources/mbss.yml");
         System.out.println("@@@@@@@@@@@@@@@@@@@" + new File(".").getAbsolutePath());
-        new ProjectGenerator().process(projectConfig);
+        process(projectConfig);
     }
+
 
     @Test
     public void testGen() throws Exception {
-        ProjectConfig projectConfig = buildProjectCofig();
+        ProjectConfig projectConfig = buildProjectConfig();
         System.out.println("@@@@@@@@@@@@@@@@@@@" + new File(".").getAbsolutePath());
-        new ProjectGenerator().process(projectConfig);
+        process(projectConfig);
 
     }
 
-    public ProjectConfig buildProjectCofig() {
+    public ProjectConfig buildProjectConfig() {
         ProjectConfig projectConfig = new ProjectConfig();
         projectConfig.setAuthor("14120295");
         projectConfig.setDate("2014-12-30");
@@ -61,8 +62,8 @@ public class MbssProjectGenerator {
         } else {
             projectConfig.setDbConfig(buildMysqlDbConfig());
         }
-        projectConfig.addModule(getModuleConfig());
-        projectConfig.addModule(getModuleConfig2());
+        projectConfig.addModule(buildAccountModuleConfig());
+        projectConfig.addModule(buildVideoModuleConfig());
         return projectConfig;
     }
 
@@ -84,17 +85,17 @@ public class MbssProjectGenerator {
         return dbConfig;
     }
 
-    private ModuleConfig getModuleConfig() {
+    private ModuleConfig buildAccountModuleConfig() {
         ModuleConfig moduleConfig = new ModuleConfig();
         moduleConfig.setTableName("mbss_account");
         moduleConfig.setModuleName("account");
         moduleConfig.setTablePrefix("mbss");
-
+        // 依赖
         registerPart(moduleConfig);
         return moduleConfig;
     }
 
-    private ModuleConfig getModuleConfig2() {
+    private ModuleConfig buildVideoModuleConfig() {
         ModuleConfig moduleConfig = new ModuleConfig();
         moduleConfig.setTableName("mbss_video");
         moduleConfig.setModuleName("video");
@@ -107,7 +108,7 @@ public class MbssProjectGenerator {
 
     private void registerPart(ModuleConfig moduleConfig) {
         moduleConfig.addModulePartConfig(new ModulePartConfig(new ModelTpl(), "com.sunning.mbss.model", "Mapper"));
-        moduleConfig.addModulePartConfig(new ModulePartConfig(new CommonTpl("test", "model.ftl", "test.java"), "com.sunning.mbss.model", "Mapper"));
+//        moduleConfig.addModulePartConfig(new ModulePartConfig(new CommonTpl("test", "model.ftl", "test.java"), "com.sunning.mbss.model", "Mapper"));
         moduleConfig.addModulePartConfig(new ModulePartConfig(new SqlMapTpl(), "", ""));
         moduleConfig.addModulePartConfig(new ModulePartConfig(new DaoTpl(), "com.sunning.mbss.dao", "Dao"));
         moduleConfig.addModulePartConfig(new ModulePartConfig(new DaoImplTpl(), "com.sunning.mbss.dao.impl", "DaoImpl"));
