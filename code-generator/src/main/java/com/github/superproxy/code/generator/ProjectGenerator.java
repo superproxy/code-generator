@@ -3,19 +3,20 @@ package com.github.superproxy.code.generator;
 import com.github.superproxy.code.generator.config.ModuleConfig;
 import com.github.superproxy.code.generator.config.ModulePartConfig;
 import com.github.superproxy.code.generator.config.ProjectConfig;
-import com.github.superproxy.code.generator.core.generator.modelgen.ModelGeneratorConfig;
-import com.github.superproxy.code.generator.core.generator.modelgen.ModelAndModelMapHandlerManager;
-import com.github.superproxy.code.generator.core.generator.modelgen.ModelTemplateGenerator;
-import com.github.superproxy.code.generator.support.model.CommonModel;
-import com.github.superproxy.code.generator.support.model.DbJavaModelConfig;
-import com.github.superproxy.code.generator.support.model.DbJavaModelModelGeneratorConfigConvertImpl;
-import com.github.superproxy.code.generator.support.model.DbJavaModelGenerator;
-import com.github.superproxy.code.generator.support.model.db.DbExtendHandlerModelAnd;
-import com.github.superproxy.code.generator.support.model.java.lang.JavaBeanExtendHandlerModelAnd;
-import com.github.superproxy.code.generator.support.model.java.service.ServiceExtendHandlerModelAnd;
-import com.github.superproxy.code.generator.support.model.java.sqlmap.SqlMapMethodExtendHandlerModelAnd;
-import com.github.superproxy.code.generator.support.model.java.ui.UIExtendHandlerModelAnd;
-import com.github.superproxy.code.generator.support.model.project.ProjectModelAndModelMapExtendHandler;
+import com.github.superproxy.code.generator.config.YamlUtils;
+import com.github.superproxy.code.generator.core.modelgen.ModelAndModelMapHandlerManager;
+import com.github.superproxy.code.generator.core.modelgen.ModelGeneratorConfig;
+import com.github.superproxy.code.generator.core.modelgen.ModelTemplateGenerator;
+import com.github.superproxy.code.generator.support.domain.convert.DomainGeneratorConfigConvertImpl;
+import com.github.superproxy.code.generator.support.domain.DomainGenerator;
+import com.github.superproxy.code.generator.support.domain.bean.Domain;
+import com.github.superproxy.code.generator.support.domain.bean.DomainConfig;
+import com.github.superproxy.code.generator.support.domain.extend.db.DbExtendHandler;
+import com.github.superproxy.code.generator.support.domain.extend.java.lang.JavaBeanExtendHandler;
+import com.github.superproxy.code.generator.support.domain.extend.java.service.ServiceExtendHandler;
+import com.github.superproxy.code.generator.support.domain.extend.java.sqlmap.SqlMapMethodExtendHandler;
+import com.github.superproxy.code.generator.support.domain.extend.java.ui.UIExtendHandler;
+import com.github.superproxy.code.generator.support.domain.extend.project.ProjectModelMapExtendHandler;
 
 public abstract class ProjectGenerator {
     protected void process(ProjectConfig projectConfig) throws Exception {
@@ -23,26 +24,28 @@ public abstract class ProjectGenerator {
             moduleConfig.setProjectConfig(projectConfig); // 查找节点方便
             for (ModulePartConfig partConfig : moduleConfig.getModulePartConfigList()) {
                 partConfig.setModuleConfig(moduleConfig); // 查找节点方便
-                ModelTemplateGenerator generator = new DbJavaModelGenerator();
-                DbJavaModelConfig dbJavaModelConfig = DbJavaModelModelGeneratorConfigConvertImpl.covert2ModuleConfig(projectConfig, moduleConfig, partConfig);
-                CommonModel commonModel = new DbJavaModelModelGeneratorConfigConvertImpl().getDbJavaModel(dbJavaModelConfig, projectConfig, moduleConfig, partConfig);
+                ModelTemplateGenerator generator = new DomainGenerator();
+                DomainConfig domainConfig = DomainGeneratorConfigConvertImpl.covert2ModuleConfig(projectConfig, moduleConfig, partConfig);
+                Domain domain = new DomainGeneratorConfigConvertImpl().getDbJavaModel(domainConfig, projectConfig, moduleConfig, partConfig);
 
-                ModelAndModelMapHandlerManager modelAndModelMapHandlerManager = new ModelAndModelMapHandlerManager();
-                modelAndModelMapHandlerManager.registerModelHandler(new JavaBeanExtendHandlerModelAnd());
-                modelAndModelMapHandlerManager.registerModelHandler(new DbExtendHandlerModelAnd());
-                modelAndModelMapHandlerManager.registerModelHandler(new UIExtendHandlerModelAnd());
+                ModelAndModelMapHandlerManager handlerManager = new ModelAndModelMapHandlerManager();
+                handlerManager.registerModelHandler(new JavaBeanExtendHandler());
+                handlerManager.registerModelHandler(new DbExtendHandler());
+                handlerManager.registerModelHandler(new UIExtendHandler());
 
-                modelAndModelMapHandlerManager.registerModelMapHandler(new ProjectModelAndModelMapExtendHandler());
-                modelAndModelMapHandlerManager.registerModelMapHandler(new JavaBeanExtendHandlerModelAnd());
-                modelAndModelMapHandlerManager.registerModelMapHandler(new DbExtendHandlerModelAnd());
-                modelAndModelMapHandlerManager.registerModelMapHandler(new ServiceExtendHandlerModelAnd());
-                modelAndModelMapHandlerManager.registerModelMapHandler(new SqlMapMethodExtendHandlerModelAnd());
-                modelAndModelMapHandlerManager.registerModelMapHandler(new UIExtendHandlerModelAnd());
+                handlerManager.registerModelMapHandler(new ProjectModelMapExtendHandler());
+                handlerManager.registerModelMapHandler(new JavaBeanExtendHandler());
+                handlerManager.registerModelMapHandler(new DbExtendHandler());
+                handlerManager.registerModelMapHandler(new ServiceExtendHandler());
+                handlerManager.registerModelMapHandler(new SqlMapMethodExtendHandler());
+                handlerManager.registerModelMapHandler(new UIExtendHandler());
 
 
-                modelAndModelMapHandlerManager.extendModel(commonModel);
-                generator.setModelAndModelMapHandlerManager(modelAndModelMapHandlerManager);
-                ModelGeneratorConfig modelGeneratorConfig = DbJavaModelModelGeneratorConfigConvertImpl.buildGeneratorContext(commonModel, dbJavaModelConfig, projectConfig, moduleConfig, partConfig);
+                handlerManager.extendModel(domain);
+
+                YamlUtils.writeDomain(domain, "domain.yaml");
+                generator.setModelAndModelMapHandlerManager(handlerManager);
+                ModelGeneratorConfig modelGeneratorConfig = DomainGeneratorConfigConvertImpl.buildGeneratorContext(domain, domainConfig, projectConfig, moduleConfig, partConfig);
                 generator.generator(modelGeneratorConfig);
             }
         }

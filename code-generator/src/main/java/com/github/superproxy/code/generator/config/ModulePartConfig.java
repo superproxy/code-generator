@@ -1,6 +1,6 @@
 package com.github.superproxy.code.generator.config;
 
-import com.github.superproxy.code.generator.support.model.CommonModel;
+import com.github.superproxy.code.generator.support.domain.bean.Domain;
 import com.github.superproxy.code.generator.tpl.Tpl;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -31,11 +31,11 @@ public class ModulePartConfig implements Serializable {
         this.packageName = packageName;
     }
 
-    public String getTplOutPath(CommonModel commonModel) {
+    public String getTplOutPath(Domain domain) {
         try {
             Constructor<?> constructor = Class.forName(tplClass).getConstructor();
             Tpl tpl = (Tpl) constructor.newInstance();
-            tplOutPath = tpl.getOutPath(commonModel);
+            tplOutPath = tpl.getOutPath(domain);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

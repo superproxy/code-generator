@@ -1,6 +1,6 @@
 package com.github.superproxy.code.generator.tpl;
 
-import com.github.superproxy.code.generator.core.generator.modelgen.Model;
+import com.github.superproxy.code.generator.core.modelgen.Model;
 
 public class CommonTpl implements Tpl {
 

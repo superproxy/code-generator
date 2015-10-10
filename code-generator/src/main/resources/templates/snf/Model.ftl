@@ -1,10 +1,4 @@
 <#ftl encoding="UTF-8">
-<#--<#assign fields = model.fieldList?sort/>-->
-<#--<#assign pkFields = model.pkFieldList?sort/>-->
-<#--<#assign className = model.className/>-->
-<#--<#assign package = model.package/>-->
-<#--<#assign fieldsize = fields?size/>-->
-<#--<#assign pkSize = pks?size/>-->
 /**
  * @(#) ${className}.java
  */
@@ -30,9 +24,9 @@ public class ${className} implements BaseModel {
 */
 private static final long serialVersionUID = ${serialVersionUID};
 
-<#list pkFields as field>
+<#list javaBean.fieldList as field>
 /**
-* ${field.columnComment}
+* ${field.comment}
 */
 private ${field.shortJavaType} ${field.javaName};
 
@@ -40,7 +34,7 @@ private ${field.shortJavaType} ${field.javaName};
 
 <#list fields as field>
 /**
-* ${field.columnComment}
+* ${field.comment}
 */
 private ${field.shortJavaType} ${field.javaName};
 
