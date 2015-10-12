@@ -15,11 +15,6 @@ public class Domain implements Model {
     private String comment;
     private List<DomainField> fieldList;
     private List<DomainField> pkFieldList;
-    private DomainConfig domainConfig;
-    private JavaBean javaBean;
-    private TableInfo tableInfo;
-    private UIModel uiModel;
-
     public String getComment() {
         return comment;
     }
@@ -36,22 +31,6 @@ public class Domain implements Model {
         this.name = name;
     }
 
-    public UIModel getUiModel() {
-        return uiModel;
-    }
-
-    public void setUiModel(UIModel uiModel) {
-        this.uiModel = uiModel;
-    }
-
-    public DomainConfig getDomainConfig() {
-        return domainConfig;
-    }
-
-    public void setDomainConfig(DomainConfig domainConfig) {
-        this.domainConfig = domainConfig;
-    }
-
     public List<DomainField> getFieldList() {
         return fieldList;
     }
@@ -66,23 +45,6 @@ public class Domain implements Model {
 
     public void setPkFieldList(List<DomainField> pkFieldList) {
         this.pkFieldList = pkFieldList;
-    }
-
-    public void setJavaBean(JavaBean javaBean) {
-        this.javaBean = javaBean;
-    }
-
-
-    public TableInfo getTableInfo() {
-        return tableInfo;
-    }
-
-    public void setTableInfo(TableInfo tableInfo) {
-        this.tableInfo = tableInfo;
-    }
-
-    public JavaBean getJavaBean() {
-        return javaBean;
     }
 
 }

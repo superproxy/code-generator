@@ -1,7 +1,7 @@
 package com.github.superproxy.code.generator.support.domain.rules.sqlmap;
 
 import com.github.superproxy.code.generator.core.modelgen.Model;
-import com.github.superproxy.code.generator.support.domain.bean.Domain;
+import com.github.superproxy.code.generator.support.domain.bean.ComposeModel;
 import com.github.superproxy.code.generator.support.domain.bean.DomainConfig;
 import com.github.superproxy.code.generator.tpl.Tpl;
 
@@ -20,7 +20,7 @@ public class SqlMapTpl implements Tpl {
 
     @Override
     public String getOutPath(Model model) {
-        Domain domain = (Domain) model;
+        ComposeModel domain = (ComposeModel) model;
         DomainConfig modelConfig = domain.getDomainConfig();
         String pkgDir = modelConfig.getOutPath();
         String module = modelConfig.getModuleName();

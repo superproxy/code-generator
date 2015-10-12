@@ -1,5 +1,3 @@
-<#assign columns = fieldList?sort/>
-<#assign pks = pkFieldList?sort/>
 /**
 * SUNING APPLIANCE CHAINS.
 * Copyright (c) 2012-2012 All Rights Reserved.
@@ -24,10 +22,8 @@ public class ${className} implements ${shortClassName}Service {
 @Autowired
 private ${shortClassName}Dao ${shortClassName?lower_case}Dao;
 
-
-
 @Override
-public AccountEntity getUserByPhone(String phoneNo){
+public ${className} create(String phoneNo){
 Map
 <String, Object> param = new HashMap
 <String, Object>();

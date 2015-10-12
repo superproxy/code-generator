@@ -8,12 +8,17 @@ import ${package}.${shortClassName}Entity;
 */
 public interface ${className} extends BaseService {
 
-       int    create();
-       int    update();
-       int    delete();
-      List<${className}  query();
-      List<${className}  queryByCondition(QueryParam<${className}QueryEx> queryparam);
+int create(${shortClassName} ${className?uncap_first});
+
+int create(${shortClassName} ${shortClassName?uncap_first});
+
+int update(${shortClassName} ${shortClassName?uncap_first});
+
+${shortClassName} query(String openId);
+List<${className}  query();
+List<${className}  queryByCondition(QueryParam
+<${className}QueryEx> queryparam);
 
 
-}
+    }
 

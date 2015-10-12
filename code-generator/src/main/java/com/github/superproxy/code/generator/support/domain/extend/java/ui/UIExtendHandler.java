@@ -3,7 +3,7 @@ package com.github.superproxy.code.generator.support.domain.extend.java.ui;
 
 import com.github.superproxy.code.generator.core.modelgen.Model;
 import com.github.superproxy.code.generator.core.modelgen.ModelAndModelMapExtendHandler;
-import com.github.superproxy.code.generator.support.domain.bean.Domain;
+import com.github.superproxy.code.generator.support.domain.bean.ComposeModel;
 import com.github.superproxy.code.generator.support.domain.bean.DomainField;
 import com.github.superproxy.code.generator.support.domain.bean.UIElement;
 import com.github.superproxy.code.generator.support.domain.bean.UIModel;
@@ -20,25 +20,25 @@ public class UIExtendHandler implements ModelAndModelMapExtendHandler {
 
     @Override
     public void extendModelMap(Model model, Map extend) {
-        Domain dbJavaModel = (Domain) model;
+        ComposeModel dbJavaModel = (ComposeModel) model;
         UIModel uiModel = dbJavaModel.getUiModel();
         extend.put("ui", uiModel);
     }
 
     @Override
     public void extendModel(Model model) {
-        Domain domain = (Domain) model;
+        ComposeModel domain = (ComposeModel) model;
         UIModel uiModel = buildUIModel(domain);
         domain.setUiModel(uiModel);
     }
 
-    private UIModel buildUIModel(Domain domain) {
+    private UIModel buildUIModel(ComposeModel composeModel) {
         UIModel uiModel = new UIModel();
-        for (DomainField field : domain.getFieldList()) {
+        for (DomainField field : composeModel.getDomain().getFieldList()) {
             UIElement element = new UIElement();
             element.setName(field.getName());
             element.setDisplayName(field.getDisplayName());
-            element.setControlType(convet(field));
+            element.setControlType(convert(field));
             uiModel.addElement(element);
         }
         return uiModel;
@@ -50,7 +50,7 @@ public class UIExtendHandler implements ModelAndModelMapExtendHandler {
      * @param field
      * @return
      */
-    private String convet(DomainField field) {
+    private String convert(DomainField field) {
         return "input";
     }
 

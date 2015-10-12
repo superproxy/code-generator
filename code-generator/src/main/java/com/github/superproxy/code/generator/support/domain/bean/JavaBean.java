@@ -1,6 +1,7 @@
 package com.github.superproxy.code.generator.support.domain.bean;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JavaBean {
@@ -9,7 +10,7 @@ public class JavaBean {
     private String packageName;
     private String serialVersionUID;
 
-    private List<JavaField> fieldList;
+    private List<JavaField> fieldList = new ArrayList<JavaField>();
 
     public List<JavaField> getFieldList() {
         return fieldList;
@@ -49,5 +50,9 @@ public class JavaBean {
 
     public void setShortClassName(String shortClassName) {
         this.shortClassName = shortClassName;
+    }
+
+    public void addJavaField(JavaField javaField) {
+        fieldList.add(javaField);
     }
 }

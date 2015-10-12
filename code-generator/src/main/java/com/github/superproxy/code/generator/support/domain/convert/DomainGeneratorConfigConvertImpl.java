@@ -6,7 +6,7 @@ import com.github.superproxy.code.generator.config.ModulePartConfig;
 import com.github.superproxy.code.generator.config.ProjectConfig;
 import com.github.superproxy.code.generator.core.engine.freemarker.FreeMarkerTplEngine;
 import com.github.superproxy.code.generator.core.modelgen.ModelGeneratorConfig;
-import com.github.superproxy.code.generator.support.domain.bean.Domain;
+import com.github.superproxy.code.generator.support.domain.bean.ComposeModel;
 import com.github.superproxy.code.generator.support.domain.bean.DomainConfig;
 
 import java.util.logging.Logger;
@@ -30,7 +30,7 @@ public class DomainGeneratorConfigConvertImpl implements ModelGeneratorConfigCon
         return domainConfig;
     }
 
-    public static ModelGeneratorConfig buildGeneratorContext(Domain domain, DomainConfig domainConfig, ProjectConfig projectConfig, ModuleConfig moduleConfig, ModulePartConfig modulePartConfig) {
+    public static ModelGeneratorConfig buildGeneratorContext(ComposeModel domain, DomainConfig domainConfig, ProjectConfig projectConfig, ModuleConfig moduleConfig, ModulePartConfig modulePartConfig) {
         ModelGeneratorConfig modelGeneratorConfig
                 = new ModelGeneratorConfig();
         modelGeneratorConfig.setModel(domain);
@@ -41,7 +41,7 @@ public class DomainGeneratorConfigConvertImpl implements ModelGeneratorConfigCon
         return modelGeneratorConfig;
     }
 
-    public static Domain getDbJavaModel(DomainConfig domainConfig, ProjectConfig projectConfig, ModuleConfig moduleConfig, ModulePartConfig modulePartConfig) {
+    public static ComposeModel getDbJavaModel(DomainConfig domainConfig, ProjectConfig projectConfig, ModuleConfig moduleConfig, ModulePartConfig modulePartConfig) {
         return new DomainFromDbReader().reader(domainConfig, projectConfig, moduleConfig, modulePartConfig);
     }
 

@@ -2,7 +2,7 @@ package com.github.superproxy.code.generator.support.domain.extend.java.sqlmap;
 
 import com.github.superproxy.code.generator.support.domain.bean.ColumnInfo;
 import com.github.superproxy.code.generator.support.domain.bean.TableInfo;
-import com.github.superproxy.code.generator.support.domain.bean.Domain;
+import com.github.superproxy.code.generator.support.domain.bean.ComposeModel;
 import com.github.superproxy.code.generator.support.domain.bean.JavaBean;
 
 public class SqlMapMethodImpl implements SqlMapMethod {
@@ -16,7 +16,7 @@ public class SqlMapMethodImpl implements SqlMapMethod {
     }
 
     @Override
-    public String getInsert2Generator(Domain domain) {
+    public String getInsert2Generator(ComposeModel domain) {
 
         TableInfo tableInfo = domain.getTableInfo();
         StringBuilder sb = new StringBuilder();
@@ -82,7 +82,7 @@ public class SqlMapMethodImpl implements SqlMapMethod {
     }
 
     @Override
-    public String getInsertGenerator(Domain domain) {
+    public String getInsertGenerator(ComposeModel domain) {
         TableInfo tableInfo = domain.getTableInfo();
         StringBuilder sb = new StringBuilder();
 
@@ -139,7 +139,7 @@ public class SqlMapMethodImpl implements SqlMapMethod {
     }
 
     @Override
-    public String updateGenerator(Domain domain) {
+    public String updateGenerator(ComposeModel domain) {
         TableInfo tableInfo = domain.getTableInfo();
 
 //        update t_nb_user set nick = :nick, sex = :sex, face_url = :face_url,
@@ -185,7 +185,7 @@ public class SqlMapMethodImpl implements SqlMapMethod {
     }
 
     @Override
-    public String queryByIdGenerator(Domain domain) {
+    public String queryByIdGenerator(ComposeModel domain) {
 //        SELECT t.*
 //        FROM t_nb_user t WHERE t.id = :id
         TableInfo tableInfo = domain.getTableInfo();
@@ -208,7 +208,7 @@ public class SqlMapMethodImpl implements SqlMapMethod {
     }
 
     @Override
-    public String queryCountGenerator(Domain domain) {
+    public String queryCountGenerator(ComposeModel domain) {
         TableInfo tableInfo = domain.getTableInfo();
 //        SELECT COUNT(1) AS count FROM t_nb_user c
 //        WHERE 1=1
@@ -242,7 +242,7 @@ public class SqlMapMethodImpl implements SqlMapMethod {
     }
 
     @Override
-    public String queryByPageGenerator(Domain domain) {
+    public String queryByPageGenerator(ComposeModel domain) {
         TableInfo tableInfo = domain.getTableInfo();
 //        SELECT c.* FROM t_nb_user c
 //        WHERE 1=1
@@ -278,7 +278,7 @@ public class SqlMapMethodImpl implements SqlMapMethod {
 
 
     @Override
-    public String deleteByIdGenerator(Domain domain) {
+    public String deleteByIdGenerator(ComposeModel domain) {
         TableInfo tableInfo = domain.getTableInfo();
         StringBuilder sb = new StringBuilder();
 

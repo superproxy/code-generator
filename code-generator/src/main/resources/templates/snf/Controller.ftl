@@ -1,5 +1,3 @@
-<#assign columns = fieldList?sort/>
-<#assign pks = pkFieldList?sort/>
 package ${package};
 
 import com.suning.dal.dao.BaseDao;

@@ -1,7 +1,7 @@
 package com.github.superproxy.code.generator;
 
 import com.github.superproxy.code.generator.config.ProjectConfig;
-import com.github.superproxy.code.generator.config.YamlUtils;
+import com.github.superproxy.code.generator.config.ConfigYamlUtils;
 
 public class App {
 
@@ -10,7 +10,7 @@ public class App {
     }
 
     private void gen(String path) throws Exception {
-        ProjectConfig projectConfig = YamlUtils.read(path);
+        ProjectConfig projectConfig = ConfigYamlUtils.read(path);
         new ProjectGenerator(){}.process(projectConfig);
     }
 

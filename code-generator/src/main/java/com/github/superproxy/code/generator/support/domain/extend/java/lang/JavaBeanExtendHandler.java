@@ -3,16 +3,17 @@ package com.github.superproxy.code.generator.support.domain.extend.java.lang;
 
 import com.github.superproxy.code.generator.core.modelgen.Model;
 import com.github.superproxy.code.generator.core.modelgen.ModelAndModelMapExtendHandler;
-import com.github.superproxy.code.generator.support.domain.bean.Domain;
+import com.github.superproxy.code.generator.support.domain.bean.ComposeModel;
 import com.github.superproxy.code.generator.support.domain.bean.JavaBean;
-import com.github.superproxy.code.generator.support.domain.convert.JavaBeanConvertStrategy;
-import com.github.superproxy.code.generator.support.domain.convert.JavaBeanConvertStrategyImpl;
+import com.github.superproxy.code.generator.support.domain.convert.JavaBeanConvert;
+import com.github.superproxy.code.generator.support.domain.convert.JavaBeanConvertImpl;
+import com.github.superproxy.code.generator.support.domain.convert.JavaFieldConvertImpl;
 
 import java.util.Map;
 
 public class JavaBeanExtendHandler implements ModelAndModelMapExtendHandler {
 
-    private JavaBeanConvertStrategy javaBeanConvertStrategy = new JavaBeanConvertStrategyImpl();
+    private JavaBeanConvert javaBeanConvert = new JavaBeanConvertImpl(new JavaFieldConvertImpl());
 
 
     @Override
@@ -22,7 +23,7 @@ public class JavaBeanExtendHandler implements ModelAndModelMapExtendHandler {
 
     @Override
     public void extendModelMap(Model model, Map extend) {
-        Domain domain = (Domain) model;
+        ComposeModel domain = (ComposeModel) model;
         JavaBean javaBean = domain.getJavaBean();
         extend.put("javaBean", javaBean);
         extend.put("package", javaBean.getPackageName());
@@ -33,8 +34,8 @@ public class JavaBeanExtendHandler implements ModelAndModelMapExtendHandler {
 
     @Override
     public void extendModel(Model model) {
-        Domain domain = (Domain) model;
-        JavaBean javaBean = javaBeanConvertStrategy.convert(domain);
+        ComposeModel domain = (ComposeModel) model;
+        JavaBean javaBean = javaBeanConvert.convert(domain);
         domain.setJavaBean(javaBean);
     }
 

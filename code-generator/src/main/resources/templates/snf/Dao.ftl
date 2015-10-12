@@ -12,5 +12,13 @@ import com.suning.dal.model.${moduleName}.${shortClassName};
 */
 public interface ${className} extends BaseDao {
 
+  int create(${shortClassName} ${className?uncap_first});
+
+  int create(${shortClassName} ${shortClassName?uncap_first});
+
+  int update(${shortClassName} ${shortClassName?uncap_first});
+
+  ${shortClassName} query(String openId);
+
 }
 

@@ -5,11 +5,8 @@ import com.github.superproxy.code.generator.config.DbConfig;
 import com.github.superproxy.code.generator.config.ModuleConfig;
 import com.github.superproxy.code.generator.config.ModulePartConfig;
 import com.github.superproxy.code.generator.config.ProjectConfig;
-import com.github.superproxy.code.generator.support.domain.bean.Domain;
-import com.github.superproxy.code.generator.support.domain.bean.DomainConfig;
-import com.github.superproxy.code.generator.support.domain.bean.DbSchema;
+import com.github.superproxy.code.generator.support.domain.bean.*;
 import com.github.superproxy.code.generator.support.domain.source.db.DbSchemaFactory;
-import com.github.superproxy.code.generator.support.domain.bean.TableInfo;
 import com.github.superproxy.code.generator.support.domain.source.db.support.H2DbSchemaFactory;
 import com.github.superproxy.code.generator.support.domain.source.db.support.MysqlDbSchemaFactory;
 
@@ -30,11 +27,13 @@ public class DomainFromDbReader implements DomainReader {
         return dbSchemaFactory;
     }
 
-    private Domain covertModelFromDb(TableInfo tableInfo, DomainConfig domainConfig, ProjectConfig projectConfig, ModuleConfig moduleConfig, ModulePartConfig modulePartConfig) throws Exception {
+    private ComposeModel covertModelFromDb(TableInfo tableInfo, DomainConfig domainConfig, ProjectConfig projectConfig, ModuleConfig moduleConfig, ModulePartConfig modulePartConfig) throws Exception {
+        ComposeModel composeModel = new ComposeModel();
         Domain domain = TableInfo2Domain.convert(tableInfo, domainConfig);
-        domain.setDomainConfig(domainConfig);
-        domain.setTableInfo(tableInfo);
-        return domain;
+        composeModel.setDomainConfig(domainConfig);
+        composeModel.setTableInfo(tableInfo);
+        composeModel.setDomain(domain);
+        return composeModel;
     }
 
     private TableInfo getTableInfo(ProjectConfig projectConfig, ModuleConfig moduleConfig) throws Exception {
@@ -55,7 +54,7 @@ public class DomainFromDbReader implements DomainReader {
 
 
     @Override
-    public Domain reader(DomainConfig domainConfig, ProjectConfig projectConfig, ModuleConfig moduleConfig, ModulePartConfig modulePartConfig) {
+    public ComposeModel reader(DomainConfig domainConfig, ProjectConfig projectConfig, ModuleConfig moduleConfig, ModulePartConfig modulePartConfig) {
         try {
             TableInfo tableInfo = getTableInfo(projectConfig, moduleConfig);
             return covertModelFromDb(tableInfo, domainConfig, projectConfig, moduleConfig, modulePartConfig);

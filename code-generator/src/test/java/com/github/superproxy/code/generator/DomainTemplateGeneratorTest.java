@@ -2,7 +2,7 @@ package com.github.superproxy.code.generator;
 
 import com.github.superproxy.code.generator.core.engine.freemarker.FreeMarkerTplEngine;
 import com.github.superproxy.code.generator.core.modelgen.*;
-import com.github.superproxy.code.generator.support.domain.bean.Domain;
+import com.github.superproxy.code.generator.support.domain.bean.ComposeModel;
 import com.github.superproxy.code.generator.support.domain.extend.java.service.ServiceExtendHandler;
 import org.testng.annotations.Test;
 
@@ -19,7 +19,7 @@ public class DomainTemplateGeneratorTest {
         cfg.setOutPath("d:/env/test-model.java");
         cfg.setTplsRoot(new File("src/test/resources").getAbsolutePath());
         cfg.setTplPath("test-model.ftl");
-        cfg.setModel(new Domain());
+        cfg.setModel(new ComposeModel());
 
         ModelAndModelMapHandlerManager modelAndModelMapHandlerManager = new ModelAndModelMapHandlerManager();
         modelAndModelMapHandlerManager.registerModelMapHandler(new ModelAndModelMapExtendHandler() {

@@ -2,7 +2,7 @@ package com.github.superproxy.code.generator.support.domain.extend.java.sqlmap;
 
 import com.github.superproxy.code.generator.core.modelgen.Model;
 import com.github.superproxy.code.generator.core.modelgen.ModelMapExtendHandler;
-import com.github.superproxy.code.generator.support.domain.bean.Domain;
+import com.github.superproxy.code.generator.support.domain.bean.ComposeModel;
 import com.github.superproxy.code.generator.support.domain.bean.DomainConfig;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class SqlMapMethodExtendHandler implements ModelMapExtendHandler {
 
     @Override
     public void extendModelMap(Model model, Map extend) {
-        Domain domain = (Domain) model;
+        ComposeModel domain = (ComposeModel) model;
         Map map = new HashMap();
         map.put(SqlMapExtendModel.NAME, getSqlMapName(domain, domain.getDomainConfig()));
         map.put(SqlMapExtendModel.INSERT, sqlMapMethod.getInsertGenerator(domain));
@@ -34,11 +34,11 @@ public class SqlMapMethodExtendHandler implements ModelMapExtendHandler {
 //        extend.put("name", getSqlMapName((Domain) model));
     }
 
-    private String getSqlMapName(Domain domain) {
+    private String getSqlMapName(ComposeModel domain) {
         return domain.getTableInfo().getTableName().replace(domain.getDomainConfig().getTablePrefix() + "_", "");
     }
 
-    private String getSqlMapName(Domain domain, DomainConfig domainConfig) {
+    private String getSqlMapName(ComposeModel domain, DomainConfig domainConfig) {
         return domain.getTableInfo().getTableName().replace(domainConfig.getTablePrefix() + "_", "");
     }
 

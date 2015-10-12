@@ -1,5 +1,5 @@
-<#assign columns = fieldList?sort/>
-<#assign pks = pkFieldList?sort/>
+<#assign columns = table.columnInfoList?sort/>
+<#assign pks = table.pkColumnList?sort/>
 <?xml version="1.0" encoding="UTF-8" ?>
 <sqlMap namespace="${shortClassName?uncap_first}">
     <sql id="insert">
@@ -17,25 +17,25 @@
     ${sqlMap.update}
         ]]>
     </sql>
-    <sql id="deleteById">
+    <sql id="delete_by_id">
         <![CDATA[
     ${sqlMap.deleteById}
         ]]>
     </sql>
 
-    <sql id="queryById">
+    <sql id="query_by_id">
         <![CDATA[
     ${sqlMap.queryById}
         ]]>
     </sql>
 
-    <sql id="queryByPage">
+    <sql id="query_by_page">
         <![CDATA[
     ${sqlMap.queryByPage}
         ]]>
     </sql>
 
-    <sql id="queryCount">
+    <sql id="query_count">
         <![CDATA[
     ${sqlMap.queryCount}
         ]]>

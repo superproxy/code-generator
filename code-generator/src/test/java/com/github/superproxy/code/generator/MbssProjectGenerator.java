@@ -23,7 +23,7 @@ public class MbssProjectGenerator extends ProjectGenerator {
      */
     @Test
     public void testWrite() throws Exception {
-        YamlUtils.write(buildProjectConfig(), "src/test/resources/mbss.yml");
+        ConfigYamlUtils.write(buildProjectConfig(), "src/test/resources/mbss.yml");
     }
 
     /**
@@ -33,7 +33,7 @@ public class MbssProjectGenerator extends ProjectGenerator {
      */
     @Test(dependsOnMethods = "testWrite")
     public void testGenFromFile() throws Exception {
-        ProjectConfig projectConfig = YamlUtils.read("src/test/resources/mbss.yml");
+        ProjectConfig projectConfig = ConfigYamlUtils.read("src/test/resources/mbss.yml");
         System.out.println("@@@@@@@@@@@@@@@@@@@" + new File(".").getAbsolutePath());
         process(projectConfig);
     }

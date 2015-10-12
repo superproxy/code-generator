@@ -3,13 +3,13 @@ package com.github.superproxy.code.generator;
 import com.github.superproxy.code.generator.config.ModuleConfig;
 import com.github.superproxy.code.generator.config.ModulePartConfig;
 import com.github.superproxy.code.generator.config.ProjectConfig;
-import com.github.superproxy.code.generator.config.YamlUtils;
+import com.github.superproxy.code.generator.config.ConfigYamlUtils;
 import com.github.superproxy.code.generator.core.modelgen.ModelAndModelMapHandlerManager;
 import com.github.superproxy.code.generator.core.modelgen.ModelGeneratorConfig;
 import com.github.superproxy.code.generator.core.modelgen.ModelTemplateGenerator;
 import com.github.superproxy.code.generator.support.domain.convert.DomainGeneratorConfigConvertImpl;
 import com.github.superproxy.code.generator.support.domain.DomainGenerator;
-import com.github.superproxy.code.generator.support.domain.bean.Domain;
+import com.github.superproxy.code.generator.support.domain.bean.ComposeModel;
 import com.github.superproxy.code.generator.support.domain.bean.DomainConfig;
 import com.github.superproxy.code.generator.support.domain.extend.db.DbExtendHandler;
 import com.github.superproxy.code.generator.support.domain.extend.java.lang.JavaBeanExtendHandler;
@@ -26,7 +26,7 @@ public abstract class ProjectGenerator {
                 partConfig.setModuleConfig(moduleConfig); // 查找节点方便
                 ModelTemplateGenerator generator = new DomainGenerator();
                 DomainConfig domainConfig = DomainGeneratorConfigConvertImpl.covert2ModuleConfig(projectConfig, moduleConfig, partConfig);
-                Domain domain = new DomainGeneratorConfigConvertImpl().getDbJavaModel(domainConfig, projectConfig, moduleConfig, partConfig);
+                ComposeModel domain = new DomainGeneratorConfigConvertImpl().getDbJavaModel(domainConfig, projectConfig, moduleConfig, partConfig);
 
                 ModelAndModelMapHandlerManager handlerManager = new ModelAndModelMapHandlerManager();
                 handlerManager.registerModelHandler(new JavaBeanExtendHandler());
@@ -43,7 +43,7 @@ public abstract class ProjectGenerator {
 
                 handlerManager.extendModel(domain);
 
-                YamlUtils.writeDomain(domain, "domain.yaml");
+                ConfigYamlUtils.writeDomain(domain, "domain.yaml");
                 generator.setModelAndModelMapHandlerManager(handlerManager);
                 ModelGeneratorConfig modelGeneratorConfig = DomainGeneratorConfigConvertImpl.buildGeneratorContext(domain, domainConfig, projectConfig, moduleConfig, partConfig);
                 generator.generator(modelGeneratorConfig);

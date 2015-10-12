@@ -25,7 +25,6 @@ b. 从独立模型中构建
 6. 通过模版引擎生成信息
 
 
-
 参考
 mybatis-generator
 单个model, source  target   ftl

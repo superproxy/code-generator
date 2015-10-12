@@ -32,7 +32,7 @@ private ${field.shortJavaType} ${field.javaName};
 
 </#list>
 
-<#list fields as field>
+<#list javaBean.fieldList as field>
 /**
 * ${field.comment}
 */
@@ -40,7 +40,7 @@ private ${field.shortJavaType} ${field.javaName};
 
 </#list>
 
-<#list pkFields as field>
+<#list javaBean.fieldList as field>
 /**
 * @return the ${field.javaName}
 */
@@ -56,23 +56,5 @@ this.${field.javaName} = ${field.javaName};
 }
 
 </#list>
-
-<#list fields as field>
-/**
-* @return the ${field.javaName}
-*/
-public ${field.shortJavaType} get${field.javaName?cap_first}() {
-    return ${field.javaName};
-}
-
-/**
-* @param ${field.javaName} the ${field.javaName} to set
-*/
-public void set${field.javaName?cap_first}(${field.shortJavaType} ${field.javaName}) {
-    this.${field.javaName} = ${field.javaName};
-}
-
-</#list>
-
 //Auto Generated End
 }
