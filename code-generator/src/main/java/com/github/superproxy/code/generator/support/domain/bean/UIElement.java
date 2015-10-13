@@ -5,15 +5,37 @@ public class UIElement {
     String displayName;
 
     String controlType;
-    boolean hidden;
 
-    public boolean isHidden() {
-        return hidden;
+    String html;
+
+    public String getHtml() {
+        return html;
     }
 
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
+    public void setHtml(String html) {
+        this.html = html;
     }
+
+    public boolean isReadonly() {
+        return readonly;
+    }
+
+    public void setReadonly(boolean readonly) {
+        this.readonly = readonly;
+    }
+
+    boolean readonly;
+
+    public boolean isShow() {
+        return show;
+    }
+
+    public void setShow(boolean show) {
+        this.show = show;
+    }
+
+    boolean show;
+
     public String getControlType() {
         return controlType;
     }

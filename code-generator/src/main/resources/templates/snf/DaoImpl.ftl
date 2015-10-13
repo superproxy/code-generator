@@ -1,7 +1,3 @@
-/**
-* SUNING APPLIANCE CHAINS.
-* Copyright (c) 2012-2012 All Rights Reserved.
-*/
 package ${package};
 import com.suning.dal.dao.impl.BaseDaoImpl;
 import com.suning.dal.model.${moduleName}.${shortClassName};
@@ -21,7 +17,7 @@ private static final String ${shortClassName?upper_case}_QUERY_COUNT="${shortCla
 private static final String ${shortClassName?upper_case}_QUERY_LIST="${shortClassName?uncap_first}.query_list";
 
 @Resource
-DalClient  dalClient;
+private DalClient  dalClient;
 
 @Override
 public int create(${shortClassName} ${className?uncap_first}){

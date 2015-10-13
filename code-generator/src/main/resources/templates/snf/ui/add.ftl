@@ -1,5 +1,4 @@
 <div>
-
     <form method="post">
         <tr >
             for  list
@@ -9,9 +8,6 @@
     * ${field.columnComment}
     */
     private ${field.shortJavaType} ${field.javaName};
-
-
-
 </#list>
 
             <td colspan="2">

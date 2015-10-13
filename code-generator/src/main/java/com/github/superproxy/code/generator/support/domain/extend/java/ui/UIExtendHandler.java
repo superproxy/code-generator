@@ -39,9 +39,25 @@ public class UIExtendHandler implements ModelAndModelMapExtendHandler {
             element.setName(field.getName());
             element.setDisplayName(field.getDisplayName());
             element.setControlType(convert(field));
+            element.setHtml(convertHtml(element));
             uiModel.addElement(element);
         }
         return uiModel;
+    }
+
+    String s = " <input class=\"required\" type=\"text\" id=\"${field.name}\" name=\"${field.name}\" value=\"\"\n" +
+            "        readonly=\"${field.readonly}\">";
+
+    String date = " <input type=\"text\" name=\"buyDate\" class=\"date\" dateFmt=\"yyyy-MM-dd HH:mm:ss\"\n" +
+            "        class=\"required\" readonly=\"true\"/>\n" +
+            "        <a class=\"inputDateButton\" href=\"javascript:;\">选择</a>";
+
+    private String convertHtml(UIElement field) {
+        if ("date".equals(field.getControlType())) {
+            return date;
+        } else {
+            return s;
+        }
     }
 
     /**

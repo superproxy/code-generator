@@ -19,9 +19,6 @@ public class ${className}  extends BaseController {
 private ${shortClassName}Service ${shortClassName?lower_case}Service;
 
 //  增删改查
-
-
-
     @RequestMapping(value = "/add${shortClassName}", method = RequestMethod.GET)
     public ResponseEntity<String> add${shortClassName}( HttpServletRequest httpRequest) {
         CommonResponse<${shortClassName}> result = ${shortClassName?lower_case}Service.add${shortClassName}( );

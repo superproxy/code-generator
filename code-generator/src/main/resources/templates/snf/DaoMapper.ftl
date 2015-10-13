@@ -3,10 +3,6 @@
 <#--<#assign className = model.className/>-->
 <#--<#assign shortClassName = model.shortClassName/>-->
 <#--<#assign package = model.package/>-->
-/**
-* SUNING APPLIANCE CHAINS.
-* Copyright (c) 2012-2012 All Rights Reserved.
-*/
 package ${package};
 import com.suning.dal.dao.BaseDao;
 import com.suning.dal.model.${moduleName}.${shortClassName};
