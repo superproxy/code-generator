@@ -4,13 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>code-generator-parent</artifactId>
-        <groupId>gihub.superpoxy</groupId>
+        <groupId>com.github.superpoxy</groupId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>code-generator-web</artifactId>
-
-
+    <groupId>com.github.superpoxy</groupId>
 </project>

@@ -1,16 +1,16 @@
 package com.github.superproxy.code.generator;
 
+import com.github.superproxy.code.generator.config.ConfigYamlUtils;
 import com.github.superproxy.code.generator.config.ModuleConfig;
 import com.github.superproxy.code.generator.config.ModulePartConfig;
 import com.github.superproxy.code.generator.config.ProjectConfig;
-import com.github.superproxy.code.generator.config.ConfigYamlUtils;
 import com.github.superproxy.code.generator.core.modelgen.ModelAndModelMapHandlerManager;
 import com.github.superproxy.code.generator.core.modelgen.ModelGeneratorConfig;
 import com.github.superproxy.code.generator.core.modelgen.ModelTemplateGenerator;
-import com.github.superproxy.code.generator.support.domain.convert.DomainGeneratorConfigConvertImpl;
 import com.github.superproxy.code.generator.support.domain.DomainGenerator;
 import com.github.superproxy.code.generator.support.domain.bean.ComposeModel;
 import com.github.superproxy.code.generator.support.domain.bean.DomainConfig;
+import com.github.superproxy.code.generator.support.domain.convert.DomainGeneratorConfigConvertImpl;
 import com.github.superproxy.code.generator.support.domain.extend.db.DbExtendHandler;
 import com.github.superproxy.code.generator.support.domain.extend.java.lang.JavaBeanExtendHandler;
 import com.github.superproxy.code.generator.support.domain.extend.java.service.ServiceExtendHandler;
@@ -20,6 +20,8 @@ import com.github.superproxy.code.generator.support.domain.extend.project.Projec
 
 public abstract class ProjectGenerator {
     protected void process(ProjectConfig projectConfig) throws Exception {
+
+        int i = 0;
         for (ModuleConfig moduleConfig : projectConfig.getModules()) {
             moduleConfig.setProjectConfig(projectConfig); // 查找节点方便
             for (ModulePartConfig partConfig : moduleConfig.getModulePartConfigList()) {
@@ -43,7 +45,8 @@ public abstract class ProjectGenerator {
 
                 handlerManager.extendModel(domain);
 
-                ConfigYamlUtils.writeDomain(domain, "domain.yaml");
+                i++;
+                ConfigYamlUtils.writeDomain(domain, "domain" + i + ".yaml");
                 generator.setModelAndModelMapHandlerManager(handlerManager);
                 ModelGeneratorConfig modelGeneratorConfig = DomainGeneratorConfigConvertImpl.buildGeneratorContext(domain, domainConfig, projectConfig, moduleConfig, partConfig);
                 generator.generator(modelGeneratorConfig);

@@ -4,21 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>gihub.superpoxy</groupId>
+    <groupId>com.github.superpoxy</groupId>
     <artifactId>code-generator-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <modules>
-        <module>../code-generator</module>
-        <module>../code-generator-web</module>
-        <module>../code-generator-sample</module>
+        <module>code-generator</module>
+        <module>code-generator-web</module>
+        <module>code-generator-sample</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>gihub.superpoxy</groupId>
-            <artifactId>code-generator</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-    </dependencies>
 </project>
