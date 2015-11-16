@@ -37,3 +37,16 @@ mybatis-generator
 
 
 
+代码结构
+generator
+tpl
+config
+domain模型
+  db模型转换
+  模型扩展extend
+  project  module  每个module支持分层
+
+
+
+
+

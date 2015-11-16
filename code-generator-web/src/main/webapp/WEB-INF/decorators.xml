@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/ui/ftl/commmon">
+	<!--<excludes>-->
+		<!--<pattern>/static/*</pattern>-->
+		<!--<pattern>/common/*</pattern>-->
+		<!--<pattern>/validate*</pattern>-->
+		<!--<pattern>/getTicket*</pattern>-->
+	<!--</excludes>-->
+
+	<decorator name="original" page="footer.ftl">
+		<pattern>/login</pattern>
+		<pattern>/logon</pattern>
+		<pattern>/logout</pattern>
+	</decorator>
+
+	<decorator name="default" page="template.ftl">
+		<pattern>/*</pattern>
+	</decorator>
+</decorators>
